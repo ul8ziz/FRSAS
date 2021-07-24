@@ -4,7 +4,11 @@
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
+from tkinter import messagebox
 from student import Student
+from train import train
+from face_recognition import face_recognition
+from attendance import attendance
 import os
 
 
@@ -67,10 +71,10 @@ class Face_Recognition_System:
         img6 = img6.resize((195, 195), Image.ANTIALIAS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 
-        btn2 = Button(bg_img, image=self.photoimg6, cursor="hand2")
+        btn2 = Button(bg_img, image=self.photoimg6,command=self.face_recognition, cursor="hand2")
         btn2.place(x=400, y=80, width=195, height=195)
 
-        btn2_2 = Button(bg_img, text="Face Detector", cursor="hand2", font=("times new roman", 15, "bold"),
+        btn2_2 = Button(bg_img, text="Face Detector",command=self.face_recognition, cursor="hand2", font=("times new roman", 15, "bold"),
                         bg="darkblue", fg="white")
         btn2_2.place(x=400, y=245, width=195, height=40)
 
@@ -79,10 +83,10 @@ class Face_Recognition_System:
         img7 = img7.resize((195, 195), Image.ANTIALIAS)
         self.photoimg7 = ImageTk.PhotoImage(img7)
 
-        btn3 = Button(bg_img, image=self.photoimg7, cursor="hand2")
+        btn3 = Button(bg_img, image=self.photoimg7,command=self.attendance, cursor="hand2")
         btn3.place(x=700, y=80, width=195, height=195)
 
-        btn3_3 = Button(bg_img, text="Attendance", cursor="hand2", font=("times new roman", 15, "bold"),
+        btn3_3 = Button(bg_img, text="Attendance",command=self.attendance, cursor="hand2", font=("times new roman", 15, "bold"),
                         bg="darkblue", fg="white")
         btn3_3.place(x=700, y=245, width=195, height=40)
 
@@ -103,10 +107,10 @@ class Face_Recognition_System:
         img9 = img9.resize((195, 195), Image.ANTIALIAS)
         self.photoimg9 = ImageTk.PhotoImage(img9)
 
-        btn5 = Button(bg_img, image=self.photoimg9, cursor="hand2")
+        btn5 = Button(bg_img, image=self.photoimg9,command=self.train, cursor="hand2")
         btn5.place(x=100, y=350, width=195, height=195)
 
-        btn5_5 = Button(bg_img, text="Train Data", cursor="hand2", font=("times new roman", 15, "bold"),
+        btn5_5 = Button(bg_img, text="Train Data",command=self.train, cursor="hand2", font=("times new roman", 15, "bold"),
                         bg="darkblue", fg="white")
         btn5_5.place(x=100, y=525, width=195, height=40)
 
@@ -137,10 +141,10 @@ class Face_Recognition_System:
         img12 = img12.resize((195, 195), Image.ANTIALIAS)
         self.photoimg12 = ImageTk.PhotoImage(img12)
 
-        btn8 = Button(bg_img, image=self.photoimg12, cursor="hand2" )
+        btn8 = Button(bg_img, image=self.photoimg12, cursor="hand2",command=self.exit )
         btn8.place(x=1000, y=350, width=195, height=195)
 
-        btn8_8 = Button(bg_img, text="Exit", cursor="hand2", font=("times new roman", 15, "bold"),  bg="darkblue", fg="white")    
+        btn8_8 = Button(bg_img, text="Exit",cursor="hand2",command=self.exit,  font=("times new roman", 15, "bold"),  bg="darkblue", fg="white")    
         btn8_8.place(x=1000, y=525, width=195, height=40)
 
     # =================================== Functions =========================================
@@ -149,8 +153,28 @@ class Face_Recognition_System:
         self.new_window = Toplevel(self.root)
         self.app = Student(self.new_window)
 
+    def face_recognition(self):
+            self.new_window = Toplevel(self.root)
+            self.app = face_recognition(self.new_window)
+
+    def attendance(self):
+        self.new_window = Toplevel(self.root)
+        self.app = attendance(self.new_window)   
+
+    def train(self):
+        self.new_window = Toplevel(self.root)
+        self.app = train(self.new_window)   
+
     def open_img(self):
         os.startfile("data_set")
+    
+    def exit(self):
+        self.exit=tkinter.messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+        if self.exit >0:
+           self.root.destroy()
+        else:
+            return
+
 
 
 
