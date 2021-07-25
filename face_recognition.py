@@ -20,7 +20,6 @@ class face_recognition:
         self.root.geometry("1530x790+0+0")
         self.root.title("Face Recognition System")
 
-
         title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",font=("arial", 30, "bold"), bg="white", fg="red")
         title_lbl.place(x=0, y=3, width=1530, height=45) 
 
@@ -57,7 +56,6 @@ class face_recognition:
                 d1=now.strftime("%d/%m:%Y")
                 dtString=now.strftime("%H:%M:%S")
                 f.writelines(f"\n{i},{r},{n},{d},{dtString},{d1},Preset")
-
 
     #===================Face Recongnition ============
     def face_recog(self):
