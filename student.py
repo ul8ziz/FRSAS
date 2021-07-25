@@ -469,7 +469,7 @@ class Student:
                     id+=1
                     my_cursor.execute("update  students set Dep=%s,course=%s,year=%s,semester=%s,name=%s,Gender=%s,Division=%s,Roll=%s,Dob=%s,Email=%s,phone=%s,Address=%s,Teacher=%s,PhotoSample=%s where student_id=%s", 
                         (
-                                        self.var_std_id.get()==id+1
+                                        self.var_std_id.get()==id+1,
                                         self.var_dep.get(),
                                         self.var_course.get(),
                                         self.var_year.get(),
@@ -483,7 +483,7 @@ class Student:
                                         self.var_phone.get(),
                                         self.var_address.get(),
                                         self.var_teacher.get(),
-                                        self.var_radio1.get(),
+                                        self.var_radio1.get()
                                     ))
                     conn.commit()
                     self.fetch_data()

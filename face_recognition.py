@@ -117,9 +117,10 @@ class face_recognition:
                 ret,img=video_cap.read()
                 img=recongnize(img,clf,faceCascade)
                 cv2.imshow("Welcome To Face Recognition",img)
-
-                if cv2.waitKey(10000):
+                
+                if cv2.waitKey(10) & 0xFF == ord('q'): 
                     break
+
             video_cap.release()
             cv2.destroyAllWindows()
         except Exception as es:
