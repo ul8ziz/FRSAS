@@ -52,7 +52,7 @@ class face_recognition:
             for line in myDataList:
                 entry=line.split((","))
                 name_list.append(entry[0])
-            if((i not in name_list) and (r not in name_list) and (n not in name_list)(d not in name_list)):
+            if((i not in name_list) and (i not in name_list) and (r not in name_list) and (n not in name_list) and (d not in name_list)):
                 now=datetime.now()
                 d1=now.strftime("%d/%m:%Y")
                 dtString=now.strftime("%H:%M:%S")
@@ -118,7 +118,7 @@ class face_recognition:
                 img=recongnize(img,clf,faceCascade)
                 cv2.imshow("Welcome To Face Recognition",img)
 
-                if cv2.waitKey(1)==13:
+                if cv2.waitKey(10000):
                     break
             video_cap.release()
             cv2.destroyAllWindows()

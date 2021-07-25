@@ -313,11 +313,11 @@ class Student:
                 my_cursor = conn.cursor()
                 my_cursor.execute("insert into students values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)",
                                   (
+                                      self.var_std_id.get(),
                                       self.var_dep.get(),
                                       self.var_course.get(),
                                       self.var_year.get(),
                                       self.var_semester.get(),
-                                      self.var_std_id.get(),
                                       self.var_std_name.get(),
                                       self.var_div.get(),
                                       self.var_roll.get(),
@@ -373,7 +373,6 @@ class Student:
         self.var_address.set(data[12]),
         self.var_teacher.set(data[13]),
         self.var_radio1.set(data[14]),
-
     #===================Update
     def update_data(self):
         if self.var_dep.get() == "Select Department" or self.var_std_name.get() == "" :
@@ -470,6 +469,7 @@ class Student:
                     id+=1
                     my_cursor.execute("update  students set Dep=%s,course=%s,year=%s,semester=%s,name=%s,Gender=%s,Division=%s,Roll=%s,Dob=%s,Email=%s,phone=%s,Address=%s,Teacher=%s,PhotoSample=%s where student_id=%s", 
                         (
+                                        self.var_std_id.get()==id+1
                                         self.var_dep.get(),
                                         self.var_course.get(),
                                         self.var_year.get(),
@@ -484,7 +484,6 @@ class Student:
                                         self.var_address.get(),
                                         self.var_teacher.get(),
                                         self.var_radio1.get(),
-                                        self.var_std_id.get()==id+1
                                     ))
                     conn.commit()
                     self.fetch_data()
