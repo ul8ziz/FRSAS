@@ -169,7 +169,7 @@ class Face_Recognition_System:
         os.startfile("data_set")
     
     def exit(self):
-        self.exit=tkinter.messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+        self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
         if self.exit >0:
            self.root.destroy()
         else:

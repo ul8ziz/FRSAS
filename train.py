@@ -1,3 +1,6 @@
+# Developer :ul8ziZ
+# Date : 7-12 2021
+
 from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
