@@ -466,10 +466,10 @@ class Student:
                 myresult=my_cursor.fetchall()
                 id=0
                 for x in myresult:
-                    id+=1
-                    my_cursor.execute("update  students set Dep=%s,course=%s,year=%s,semester=%s,name=%s,Gender=%s,Division=%s,Roll=%s,Dob=%s,Email=%s,phone=%s,Address=%s,Teacher=%s,PhotoSample=%s where student_id=%s", 
+                    id=self.var_std_id.get()
+                    my_cursor.execute("update  students set Dep=%s,course=%s,year=%s,semester=%s,name=%s,Division=%s,Roll=%s,Gender=%s,Dob=%s,Email=%s,phone=%s,Address=%s,Teacher=%s,PhotoSample=%s where student_id=%s", 
                         (
-                                        self.var_std_id.get()==id+1,
+                                        self.var_std_id.get(),
                                         self.var_dep.get(),
                                         self.var_course.get(),
                                         self.var_year.get(),
@@ -498,7 +498,6 @@ class Student:
                         faces=face_classifier.detectMultiScale(gray,1.3,5)
                         #scaling factor=1.3
                         #Minimum Neighbor=5
-
                         for (x,y,w,h) in faces:
                             face_cropped=img[y:y+h,x:x+w]
                             return face_cropped
@@ -508,12 +507,12 @@ class Student:
                         ret,my_frame=cap.read() 
                         if face_cropped(my_frame) is not None:
                             img_id+=1
-                        face=cv2.resize(face_cropped(my_frame),(450,450))
-                        face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)   
-                        file_name_path="data_set/user."+str(id)+"."+str(img_id)+".jpg"  
-                        cv2.imwrite(file_name_path,face)
-                        cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
-                        cv2.imshow("Crooped Face",face)
+                            face=cv2.resize(face_cropped(my_frame),(450,450))
+                            face=cv2.cvtColor(face,cv2.COLOR_BGR2GRAY)   
+                            file_name_path="data_set/user."+str(id)+"."+str(img_id)+".jpg"  
+                            cv2.imwrite(file_name_path,face)
+                            cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
+                            cv2.imshow("Crooped Face",face)
 
                         if cv2.waitKey(1)==13 or int(img_id)==50:
                             break
