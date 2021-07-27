@@ -183,7 +183,7 @@ class attendance:
             self.AttendaceReport_table.insert("",END,values=i)
     # importCsv
     def importCsv(self):
-        try: 
+        # try: 
             global mydata
             mydata.clear()
             fln=filedialog.askopenfilename(initialdir=os.getcwd(),title="Open CSV",filetypes=(("csv file","*.csv"),("All File","*.*")),parent=self.root)            
@@ -191,25 +191,24 @@ class attendance:
                 csvread=csv.reader(myfile,delimiter=",")
                 for  i in csvread:
                     mydata.append(i)
-                self.fetchData(mydata)
+            self.fetchData(mydata)
 
-        except Exception as es:
-                messagebox.showerror("Error", f"{str(es)}", parent=self.root)
+        # except Exception as es:
+        #         messagebox.showerror("Error", f"{str(es)}", parent=self.root)
 
     # export csv
     def exportcsv(self):
-        try:
+       
             if len(mydata)<1:
               messagebox.showerror("No Data","No Data found to export ",parent=self.root)
               return False
-            fln=filedialog.askopenfilename(initialdir=os.getcwd(),title="Open CSV",filetypes=(("CSV File","*.csv"),("All File","*.*")),parent=self.root)            
+            fln=filedialog.asksaveasfilename(initialdir=os.getcwd(),title="Open CSV",filetypes=(("CSV File","*.csv"),("All File","*.*")),parent=self.root)            
             with open (fln,mode="w",newline="") as myfile:
                 exp_write=csv.writer(myfile,delimiter=",")
                 for i in mydata:
                    exp_write.writerow(i)
                 messagebox.showinfo("Date Export","Your data exported to "+os.path.basename(fln)+"successfully")
-        except Exception as es:
-                messagebox.showerror("Error", f"{str(es)}", parent=self.root)
+        
     #get cursor
     def get_cursor(self,event=""):
         cursor_row=self.AttendaceReport_table.focus()

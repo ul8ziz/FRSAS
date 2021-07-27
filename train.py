@@ -38,8 +38,6 @@ class train:
 
         f_lbl = Label(self.root, image=self.photoimg2)
         f_lbl.place(x=0, y=440, width=1530, height=325)
-
-
 #=================================training ==================
     def train_classifier(self):
         try:
@@ -58,7 +56,6 @@ class train:
                 cv2.imshow("Training",imageNp)
                 cv2.waitKey(1)==13
             ids=np.array(ids)
-
             #==============Train the classifier And save ========
             clf=cv2.face.LBPHFaceRecognizer_create() 
             clf.train(faces,ids)

@@ -109,13 +109,11 @@ class face_recognition:
             faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
             clf=cv2.face.LBPHFaceRecognizer_create()
             clf.read("classifier.xml")
-
             video_cap=cv2.VideoCapture(0)
             while True:
                 ret,img=video_cap.read()
                 img=recongnize(img,clf,faceCascade)
                 cv2.imshow("Welcome To Face Recognition",img)
-                
                 if cv2.waitKey(10) & 0xFF == ord('q'): 
                     break
 
