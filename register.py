@@ -79,24 +79,18 @@ class Register:
         self.txt_email.place(x=370, y=200, width=250)
 
         # ...........column3
-        security_Q = Label(frame, text="Select Security Question", font=(
+        security_Q = Label(frame, text="Select Type", font=(
             "times new roman", 15, "bold"), bg="white")
         security_Q.place(x=50, y=240)
 
         self.combo_security_Q = ttk.Combobox(frame, textvariable=self.var_securityQ, font=(
             "times new roman", 15, "bold"), state="readonly")
         self.combo_security_Q["values"] = (
-            "Select", "Your Birth place", "your dad name", "your mother name")
+            "Select", "Admin", "Teacher")
         self.combo_security_Q.place(x=50, y=270, width=250)
         self.combo_security_Q.current(0)
 
-        security_A = Label(frame, text="Security Answer", font=(
-            "times new roman", 15, "bold"), bg="white")
-        security_A.place(x=370, y=240)
-
-        self.txt_security = ttk.Entry(
-            frame, textvariable=self.var_securityA, font=("times new roman", 15))
-        self.txt_security.place(x=370, y=270, width=250)
+        
 
         # ......colum 5
         pswd = Label(frame, text="Password", font=(
@@ -152,9 +146,9 @@ class Register:
             messagebox.showerror(
                 "Error", "Please agree our terms and condition")
         else:
-            conn = mysql.connector.connect(host="localhost", user="root", password="Keshav@123", database="mydata")
+            conn = mysql.connector.connect(host="localhost", user="root", password="", database="FRAS_DB")
             my_cursor = conn.cursor()
-            query = ("select * from register where email=%s")
+            query = ("select * from usrse where email=%s")
             value = (self.var_email.get(),)
             my_cursor.execute(query, value)
             row = my_cursor.fetchone()
@@ -167,8 +161,6 @@ class Register:
                     self.var_lname.get(),
                     self.var_contact.get(),
                     self.var_email.get(),
-                    self.var_securityQ.get(),
-                    self.var_securityA.get(),
                     self.var_pass.get()
                 ))
                 messagebox.showinfo("Success","Register Successfully")

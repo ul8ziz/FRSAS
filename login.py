@@ -99,9 +99,9 @@ class login_window:
         elif self.txtuser.get() == "keshav45" and self.txtpass.get() == "keshav@123":
             messagebox.showinfo("success", "welcome to gundrukTech")
         else:
-            conn = mysql.connector.connect(host="localhost", user="root", password="", database="mydata")
+            conn = mysql.connector.connect(host="localhost", user="root", password="", database="FRAS_DB")
             my_cursor = conn.cursor()
-            my_cursor.execute("select * from register where email=%s and password=%s",(
+            my_cursor.execute("select * from users where name=%s and password=%s",(
                 self.txtuser.get(),
                 self.txtpass.get()
 

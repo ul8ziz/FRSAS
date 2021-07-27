@@ -385,6 +385,8 @@ class Student:
                     my_cursor = conn.cursor()
                     my_cursor.execute("update  students set Dep=%s,course=%s,Year=%s,Semester=%s,name=%s,Gender=%s,Division=%s,Roll=%s,Dob=%s,Email=%s,phone=%s,Address=%s,Teacher=%s,PhotoSample=%s  where student_id=%s ", 
                     (
+                                      
+                                      
                                       self.var_dep.get(),
                                       self.var_course.get(),
                                       self.var_year.get(),
@@ -399,7 +401,7 @@ class Student:
                                       self.var_address.get(),
                                       self.var_teacher.get(),
                                       self.var_radio1.get(),
-                                      self.var_std_id.get()
+                                      self.var_std_id.get(),
                                   ))
                 else:
                     if not update:
