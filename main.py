@@ -7,6 +7,7 @@ from PIL import Image, ImageTk
 from tkinter import messagebox
 from student import Student
 from train import train
+from dashboard import dashboard
 from face_recognition import face_recognition
 from attendance import attendance
 import os
@@ -90,16 +91,15 @@ class Face_Recognition_System:
                         bg="darkblue", fg="white")
         btn3_3.place(x=700, y=245, width=195, height=40)
 
-        # Help Desk button
+        # dashboard
         img8 = Image.open("Images/helpdesk.png")
         img8 = img8.resize((195, 195), Image.ANTIALIAS)
         self.photoimg8 = ImageTk.PhotoImage(img8)
 
-        btn4 = Button(bg_img, image=self.photoimg8, cursor="hand2")
+        btn4 = Button(bg_img,image=self.photoimg8,command=self.dashboard, cursor="hand2")
         btn4.place(x=1000, y=80, width=195, height=195)
 
-        btn4_4 = Button(bg_img, text="Help Desk", cursor="hand2", font=("times new roman", 15, "bold"),
-                        bg="darkblue", fg="white")
+        btn4_4 = Button(bg_img, text="dashboard",command=self.dashboard, cursor="hand2", font=("times new roman", 15, "bold"),bg="darkblue", fg="white")
         btn4_4.place(x=1000, y=245, width=195, height=40)
 
         # train data button
@@ -152,6 +152,11 @@ class Face_Recognition_System:
     def student_details(self):
         self.new_window = Toplevel(self.root)
         self.app = Student(self.new_window)
+
+    def dashboard(self):
+        self.new_window = Toplevel(self.root)
+        self.app = dashboard(self.new_window)
+
 
     def face_recognition(self):
             self.new_window = Toplevel(self.root)

@@ -10,8 +10,7 @@ import mysql.connector
 from mysql.connector import cursor
 import cv2
 
-
-class admin_control:
+class dashboard:
     def __init__(self, root):
         self.root = root
         self.root.geometry("1600x900+0+0")
@@ -21,7 +20,6 @@ class admin_control:
         self.var_dep = StringVar()
         self.var_tracher = StringVar()
         
-
         #============Department frame================
         department_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE, text="Department Information",font=("Calibri", 13, "bold"), fg="green")
         department_frame.place(x=5, y=100, width=720, height=250)
@@ -64,7 +62,7 @@ class admin_control:
         self.Department_table.column("dep", width=100)
         self.Department_table.pack(fill=BOTH, expand=1)
 
-        self.Department_table.bind("<ButtonRelease>",self.get_cursor)
+        self.Department_table.bind("<ButtonRelease>",self.get_department_cursor)
         self.fetch_data()
 
  #============Tracher_frame==============================================================================================================
@@ -109,7 +107,7 @@ class admin_control:
         self.Tracher_table_frame.column("Tracher", width=100)
         self.Tracher_table_frame.pack(fill=BOTH, expand=1)
 
-        self.Tracher_table_frame.bind("<ButtonRelease>",self.get_cursor)
+        self.Tracher_table_frame.bind("<ButtonRelease>",self.get_Tracher_cursor)
         self.fetch_Tracher()
 
         #======================Fun
@@ -172,12 +170,11 @@ class admin_control:
             conn.commit()
         conn.close() 
     #======================== Get cursor department ===============
-    def get_cursor(self,event=""):
+    def get_department_cursor(self,event=""):
         cursor_focus=self.Department_table.focus()
         content=self.Department_table.item(cursor_focus)
         data=content["values"] 
         self.var_dep.set(data[1])
-
 
         #add new  Tracher  
     #++++++++++++++++++++++++  add teacher
@@ -241,8 +238,8 @@ class admin_control:
         self.var_dep.set(data[1])
         self.var_dep.set(data[1])
         self.var_dep.set(data[1])
-   #======================== Get cursor department ===============
-    def get_cursor(self,event=""):
+   #======================== Get cursor Tracher ===============
+    def get_Tracher_cursor(self,event=""):
         cursor_focus=self.Tracher_table_frame.focus()
         content=self.Tracher_table_frame.item(cursor_focus)
         data=content["values"] 
@@ -253,7 +250,7 @@ class admin_control:
 
 if __name__ == "__main__":
     root = Tk()
-    obj = admin_control(root)
+    obj = dashboard(root)
     root.mainloop()
 
 
