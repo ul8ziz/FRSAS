@@ -17,7 +17,7 @@ class dashboard:
         self.root.title("Admin Control")
 
         #################varbales
-        self.var_dep = StringVar()
+        self.var_depp = StringVar()
         self.var_tracher = StringVar()
         
         #============Department frame================
@@ -28,7 +28,7 @@ class dashboard:
         department_label = Label(department_frame, text="New Department :", font=("Calibri", 10, "bold"), bg="white",fg="blue")
         department_label.grid(row=0, column=0,pady=0, padx=20, sticky=W)
 
-        department_entry = ttk.Entry(department_frame, width=20,textvariable=self.var_dep, font=("Calibri", 10, "bold"))
+        department_entry = ttk.Entry(department_frame, width=20,textvariable=self.var_depp, font=("Calibri", 10, "bold"))
         department_entry.grid(row=0, column=1,pady=30, padx=0, sticky=W)
 
         save_btn = Button(department_frame, text="Save", command=self.add_dep, width=15, font=('arial', 11, 'bold'), bg="red", fg="white")
@@ -113,7 +113,7 @@ class dashboard:
         #======================Fun
     #add new  Department  
     def add_dep(self):
-        if self.var_dep.get() == "Select Department" or self.var_dep.get() == "" :
+        if self.var_depp.get() == "Select Department" or self.var_depp.get() == "" :
             messagebox.showerror("Error", "The Field empty", parent=self.root)
         else:
             try:
@@ -121,7 +121,7 @@ class dashboard:
                 my_cursor = conn.cursor()
                 my_cursor.execute("insert into department (Department_name) values(%s)",
                                   (
-                                      self.var_dep.get(),
+                                      self.var_depp.get(),
                                   ))
                 conn.commit()
                 conn.close()
@@ -132,7 +132,7 @@ class dashboard:
     
     #==============delete department============================
     def delete_dep(self):
-        if self.var_dep.get() == "":
+        if self.var_depp.get() == "":
             messagebox.showerror("Error", "Department Most be Required", parent=self.root)
         else:
             try:
@@ -141,7 +141,7 @@ class dashboard:
                     conn = mysql.connector.connect(host="localhost",username="root", password="",database="FRAS_DB")
                     my_cursor = conn.cursor()
                     query="DELETE FROM  department WHERE Department_name=%s"
-                    val=(self.var_dep.get(),)
+                    val=(self.var_depp.get(),)
                     my_cursor.execute(query,val)                  
                 else:
                     if not delete:
@@ -174,12 +174,12 @@ class dashboard:
         cursor_focus=self.Department_table.focus()
         content=self.Department_table.item(cursor_focus)
         data=content["values"] 
-        self.var_dep.set(data[1])
+        self.var_depp.set(data[1])
 
         #add new  Tracher  
     #++++++++++++++++++++++++  add teacher
     def add_tracher(self):
-        if self.var_dep.get() == "Select Tracher" or self.var_tracher.get() == "" :
+        if self.var_depp.get() == "Select Tracher" or self.var_tracher.get() == "" :
             messagebox.showerror("Error", "The Field empty", parent=self.root)
         else:
             try:
@@ -235,9 +235,9 @@ class dashboard:
             except Exception as es:
                messagebox.showerror("Error",f"Due To :{str(es)}",parent=self.root)
     
-        self.var_dep.set(data[1])
-        self.var_dep.set(data[1])
-        self.var_dep.set(data[1])
+        self.var_depp.set(data[1])
+        self.var_depp.set(data[1])
+        self.var_depp.set(data[1])
    #======================== Get cursor Tracher ===============
     def get_Tracher_cursor(self,event=""):
         cursor_focus=self.Tracher_table_frame.focus()

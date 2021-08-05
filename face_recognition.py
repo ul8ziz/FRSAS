@@ -82,7 +82,7 @@ class face_recognition:
        #button
         Butt = Button(f_lbl, text="Tak Attendance ",command=self.face_recog, cursor="hand2", font=("times new roman",18, "bold"),bg="darkgreen", fg="white")
         Butt.place(x=365, y=620, width=200, height=40)
-
+        
     #===============attendance =============================
     def mark_attendance(self,i,n,d):
         with open("Attendance.csv","r+",newline="\n") as f:
@@ -93,10 +93,13 @@ class face_recognition:
                 name_list.append(entry[0])
             if((i not in name_list)  and (n not in name_list) and (d not in name_list)):
                 now=datetime.now()
-                d1=now.strftime("%d/%m:%Y")
+                co=self.var_course.get()
+                le=self.var_level.get()
+                se= self.var_semester.get()
+                d1=now.strftime("%d/%m/:%Y")
                 dtString=now.strftime("%H:%M:%S")
-                f.writelines(f"The Atnndans of ,{d}")
-                f.writelines(f"\n{i},{n},{d},{dtString},{d1},Preset")
+                f.writelines(f"\nThe Atnndans of ,{d}")
+                f.writelines(f"\n{i},{n},{d},{le},{se},{co},{dtString},{d1},Preset")
     #===================Face Recongnition ============
     def face_recog(self):
         try:
@@ -114,20 +117,21 @@ class face_recognition:
 
                     my_cursor.execute("select student_id from students  where student_id="+str(id))
                     i=my_cursor.fetchone()
-                    i="+".join(i)
+                    i=str(i)
+                    #  i="+".join(i)
 
-                    my_cursor.execute("select name from students  where student_id="+str(id))
+                    my_cursor.execute("select Name from students  where student_id="+str(id))
                     n=my_cursor.fetchone()
-                    n="+".join(n)  
+                    n=str(n)  
 
-                    my_cursor.execute("select dep from students  where student_id="+str(id))
+                    my_cursor.execute("select Dep from students  where student_id="+str(id))
                     d=my_cursor.fetchone()
-                    d="+".join(d)    
+                    d=str(d)    
 
                     if confidence>77:
-                        cv2.putText(img,f"Id:{i}",(x,y-75),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
-                        cv2.putText(img,f"Name:{n}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
-                        cv2.putText(img,f"Department:{d}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
+                        cv2.putText(img,f"Id:{i}",(x,y-55),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
+                        cv2.putText(img,f"Name:{n}",(x,y-30),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
+                        cv2.putText(img,f"Department:{d}",(x,y-5),cv2.FONT_HERSHEY_COMPLEX,0.8,(255,255,255),3)
                         self.mark_attendance(i,n,d)
                     else:
                         cv2.rectangle(img,(x,y),(x+w,y+h),(0,0,255),3)
@@ -140,7 +144,7 @@ class face_recognition:
                 coord=draw_boundray(img,faceCascade,1.1,10,(255,25,255),"Face",clf)
                 return img
             faceCascade=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-            clf=cv2.face.LBPHFaceRecognizer_create()
+            clf=cv2.face.LBPHFaceRecognizer_create() 
             clf.read("classifier.xml")
             video_cap=cv2.VideoCapture(0)
             while True:
