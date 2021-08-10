@@ -13,11 +13,12 @@ from attendance import attendance
 import os
 
 
-class Face_Recognition_System:
+
+class mainn:
     def __init__(self, root):
         self.root = root
         self.root.geometry("1450x720+0+0")
-        self.root.title("Face Recognition System")
+        self.root.title("Face Recognition Student Attendance System")
 
         # first image
         img1 = Image.open("Images/OIP.jpeg")
@@ -180,13 +181,8 @@ class Face_Recognition_System:
         else:
             return
 
-
-
-
-
-# defining object
 if __name__ == "__main__":
     root = Tk()
-    obj = Face_Recognition_System(root)
+    obj = mainn(root)
     root.mainloop()
 
