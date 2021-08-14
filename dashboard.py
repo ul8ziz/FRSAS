@@ -13,31 +13,54 @@ import cv2
 class dashboard:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1600x900+0+0")
+        swidth= root.winfo_screenwidth() 
+        sheight= root.winfo_screenheight()
+        self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Admin Control")
+        self.root.config(bg = '#154c79')
+        #self.root.wm_attributes('-transparentcolor','#add123')
+
 
         #################varbales
         self.var_depp = StringVar()
         self.var_tracher = StringVar()
         
+        Frame1 = Frame(root, relief=RIDGE, bg="#063970")
+        Frame1.place(x=0, y=0, width=swidth, height=110)
+        
+        img6 = Image.open("Images/homee.ico")
+        img6 = img6.resize((130, 130), Image.ANTIALIAS)
+        self.photoimg6 = ImageTk.PhotoImage(img6)
+
+        btn2 = Button(Frame1, image=self.photoimg6, cursor="hand2",width=90,height=90 ,command=self.home)
+        btn2.grid(row=0, column=2,padx=10,pady=5)
+
+        # Exit button
+        img12 = Image.open("Images/exit-sign-neon-style_77399-144.jpg")
+        img12 = img12.resize((90, 90), Image.ANTIALIAS)
+        self.photoimg12 = ImageTk.PhotoImage(img12)
+
+        btn88 = Button(Frame1, image=self.photoimg12, cursor="hand2" ,command=self.exite)
+        btn88.grid(row=0, column=8,padx=1300)
+
         #============Department frame================
-        department_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE, text="Department Information",font=("Calibri", 13, "bold"), fg="green")
-        department_frame.place(x=5, y=100, width=720, height=250)
+        department_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE,text="Department Information",font=("Calibri", 13, "bold"), fg="#063970")
+        department_frame.place(x=5, y=120, width=720, height=250)
         
         #Department entry
-        department_label = Label(department_frame, text="New Department :", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        department_label = Label(department_frame, text="New Department :", font=("Calibri", 10, "bold"), bg="white")
         department_label.grid(row=0, column=0,pady=0, padx=20, sticky=W)
 
         department_entry = ttk.Entry(department_frame, width=20,textvariable=self.var_depp, font=("Calibri", 10, "bold"))
         department_entry.grid(row=0, column=1,pady=30, padx=0, sticky=W)
 
-        save_btn = Button(department_frame, text="Save", command=self.add_dep, width=15, font=('arial', 11, 'bold'), bg="red", fg="white")
+        save_btn = Button(department_frame, text="Save", command=self.add_dep, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         save_btn.grid(row=2, column=0)
         
-        update_btn = Button(department_frame, text="Update",command=self.fetch_data, width=15, font=('arial', 11, 'bold'), bg="red", fg="white")
+        update_btn = Button(department_frame, text="Update",command=self.fetch_data, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         update_btn.grid(row=2, column=1)
 
-        delete_btn = Button(department_frame, text="Delete", command=self.delete_dep,width=15, font=('arial', 11, 'bold'), bg="red", fg="white")
+        delete_btn = Button(department_frame, text="Delete", command=self.delete_dep,width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         delete_btn.grid(row=2, column=2)
 
         # =======Table Frame
@@ -66,23 +89,23 @@ class dashboard:
         self.fetch_data()
 
  #============Tracher_frame==============================================================================================================
-        Tracher_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE, text="Tracher Information",font=("Calibri", 13, "bold"), fg="green")
+        Tracher_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE, text="Tracher Information",font=("Calibri", 13, "bold"), fg="#063970")
         Tracher_frame.place(x=5, y=400, width=720, height=250)
         
         #Tracher entry
-        Tracher_label = Label(Tracher_frame, text="New Tracher :", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        Tracher_label = Label(Tracher_frame, text="New Tracher :", font=("Calibri", 10, "bold"), bg="white")
         Tracher_label.grid(row=0, column=0,pady=0, padx=30, sticky=W)
 
         Tracher_entry = ttk.Entry(Tracher_frame, width=20,textvariable=self.var_tracher, font=("Calibri", 10, "bold"))
         Tracher_entry.grid(row=0, column=1,pady=30, padx=0, sticky=W)
 
-        save_btn = Button(Tracher_frame, text="Save", command=self.add_tracher, width=15, font=('arial', 11, 'bold'), bg="red", fg="white")
+        save_btn = Button(Tracher_frame, text="Save", command=self.add_tracher, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         save_btn.grid(row=2, column=0)
         
-        update_btn = Button(Tracher_frame, text="Update",command=self.fetch_Tracher, width=15, font=('arial', 11, 'bold'), bg="red", fg="white")
+        update_btn = Button(Tracher_frame, text="Update",command=self.fetch_Tracher, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         update_btn.grid(row=2, column=1)
 
-        delete_btn = Button(Tracher_frame, text="Delete", command=self.delete_Tracher,width=15, font=('arial', 11, 'bold'), bg="red", fg="white")
+        delete_btn = Button(Tracher_frame, text="Delete", command=self.delete_Tracher,width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         delete_btn.grid(row=2, column=2)
 
         # =======Table Frame
@@ -204,7 +227,7 @@ class dashboard:
                                                database="fras_db"
                                         )
         my_cursor = conn.cursor()
-        my_cursor.execute("select * from Tracher")
+        my_cursor.execute("select * from teacher")
         data=my_cursor.fetchall()
         if len(data)!=0:
             self.Tracher_table_frame.delete(*self.Tracher_table_frame.get_children())
@@ -222,7 +245,7 @@ class dashboard:
                 if delete>0:
                     conn = mysql.connector.connect(host="localhost",username="root", password="",database="FRAS_DB")
                     my_cursor = conn.cursor()
-                    query="DELETE FROM  Tracher WHERE Tracher_name=%s"
+                    query="DELETE FROM  teacher WHERE teacher_name=%s"
                     val=(self.var_tracher.get(),)
                     my_cursor.execute(query,val)                  
                 else:
@@ -244,6 +267,17 @@ class dashboard:
         content=self.Tracher_table_frame.item(cursor_focus)
         data=content["values"] 
         self.var_tracher.set(data[1])
+    #========= home======================
+    def home(self):
+             self.new_window = Toplevel(self.root)
+             self.app = mainn(self.new_window)
+
+    def exite(self):
+             self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+             if self.exit >0:
+                  self.root.destroy()
+             else:
+                  return 
 
 
 

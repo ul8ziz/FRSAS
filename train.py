@@ -13,10 +13,12 @@ import cv2
 class train:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1530x800+0+0")
+        swidth= root.winfo_screenwidth() 
+        sheight= root.winfo_screenheight()
+        self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Train Data")
 
-        title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",font=("arial", 35, "bold"), bg="white", fg="red")
+        title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",font=("arial", 35, "bold"), bg="white", fg="#063970")
         title_lbl.place(x=0, y=0, width=1530, height=45) 
 
         # first image
@@ -28,7 +30,7 @@ class train:
         f_lbl.place(x=0, y=55, width=1530, height=325)
 
        #button
-        Butt = Button(self.root, text="Train Data", command=self.train_classifier, cursor="hand2", font=("times new roman",25, "bold"),bg="red", fg="white")
+        Butt = Button(self.root, text="Train Data", command=self.train_classifier, cursor="hand2", font=("times new roman",25, "bold"),bg="#063970", fg="white")
         Butt.place(x=0, y=380, width=1530, height=60)
 
         # second image

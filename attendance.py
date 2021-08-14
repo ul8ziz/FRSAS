@@ -17,7 +17,9 @@ mydata=[]
 class attendance:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1600x900+0+0")
+        swidth= root.winfo_screenwidth() 
+        sheight= root.winfo_screenheight()
+        self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("FRAS")
 
         #=================varaibles
@@ -45,7 +47,7 @@ class attendance:
         bg_img = Label(self.root, image=self.photoimg4)
         bg_img.place(x=0, y=120, width=1600, height=1000)
 
-        title_lbl = Label(bg_img, text="STUDENT MANAGEMENT SYSTEM",font=("times new roman", 20, "bold"), bg="white", fg="black")
+        title_lbl = Label(bg_img, text="STUDENT MANAGEMENT SYSTEM",font=("times new roman", 20, "bold"), bg="white", fg="#063970")
         title_lbl.place(x=0, y=0, width=1600, height=50) 
 
         main_frame = Frame(bg_img, bd=2)

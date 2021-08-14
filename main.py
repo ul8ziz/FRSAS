@@ -5,7 +5,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
-from student import Student
+from student import *
 from train import train
 from dashboard import dashboard
 from face_recognition import face_recognition
@@ -21,7 +21,6 @@ class mainn:
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Face Recognition Student Attendance System")
        
-            
         # background image
         img4 = Image.open("Images/home.jpg")
         img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
@@ -34,25 +33,25 @@ class mainn:
                           font=("arial", 35, "bold"), bg="white", fg="black")
         title_lbl.place(x=0, y=0, width=1350, height=45)  
         #  buttons 
-        Frame1 = Frame(root, relief=RIDGE, bg="RoyalBlue3")
+        Frame1 = Frame(root, relief=RIDGE, bg="#063970")
         Frame1.place(x=0, y=0, width=swidth, height=210)
 
         # student button
         img5 = Image.open("Images/student.jpg")
-        img5 = img5.resize((150, 150), Image.ANTIALIAS)
+        img5 = img5.resize((180, 150), Image.ANTIALIAS)
         self.photoimg5 = ImageTk.PhotoImage(img5)
 
-        btn1 = Button(Frame1, image=self.photoimg5, command=self.student_details, cursor="hand2",width=150,height=150 ,borderwidth =0 )
-        btn1.grid(row=0, column=1,padx=44)
+        btn1 = Button(Frame1, image=self.photoimg5, command=self.student_details, cursor="hand2",width=180,height=150  )
+        btn1.grid(row=0, column=1,padx=40)
 
-        btn1_1 = Button(Frame1, text="Student Details", command=self.student_details, cursor="hand2", font=("times new roman", 15, "bold"),
-        bg="darkblue", fg="white")
-        btn1_1.grid(row=1, column=1)
+        btn1_1 = Button(Frame1, text="Student Management", command=self.student_details, cursor="hand2", font=("times new roman", 15, "bold"),
+        bg="darkblue", fg="white",width="15")
+        btn1_1.grid(row=1, column=1,)
 
         def on_leave(e):
-            btn1_1.config(background= 'SystemButtonFace', foreground= 'black')
+            btn1_1.config(background= 'darkblue', foreground= 'white')
         def on_enter(e):
-            btn1_1.config(background='darkblue', foreground= "white")
+            btn1_1.config(background='steel blue', foreground= "black")
         
         btn1_1.bind('<Enter>', on_enter)
         btn1_1.bind('<Leave>', on_leave)
@@ -65,8 +64,17 @@ class mainn:
         btn2 = Button(Frame1, image=self.photoimg6,command=self.face_recognition, cursor="hand2",width=150,height=150)
         btn2.grid(row=0, column=2,padx=10,pady=5)
 
-        btn2_2 = Button(Frame1, text="Face Detector",command=self.face_recognition, cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+        btn2_2 = Button(Frame1, text="Tak Attendance",command=self.face_recognition, cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white",width="12")
         btn2_2.grid(row=1, column=2)
+
+        def on_leave(e):
+            btn2_2.config(background= 'darkblue', foreground= 'white')
+        def on_enter(e):
+            btn2_2.config(background='steel blue', foreground= "black")
+        
+        btn2_2.bind('<Enter>', on_enter)
+        btn2_2.bind('<Leave>', on_leave)
+
 
         # attendance button
         img7 = Image.open("Images/face.jpg")
@@ -76,8 +84,17 @@ class mainn:
         btn3 = Button(Frame1, image=self.photoimg7,command=self.attendance, cursor="hand2")
         btn3.grid(row=0, column=3,padx=10)
 
-        btn3_3 = Button(Frame1, text="Attendance",command=self.attendance, cursor="hand2", font=("times new roman", 15, "bold"),bg="darkblue", fg="white")
+        btn3_3 = Button(Frame1, text="Rabort",command=self.attendance, cursor="hand2", font=("times new roman", 15, "bold"),bg="darkblue", fg="white",width="12")
         btn3_3.grid(row=1, column=3)
+        
+        def on_leave(e):
+            btn3_3.config(background= 'darkblue', foreground= 'white')
+        def on_enter(e):
+            btn3_3.config(background='steel blue', foreground= "black")
+        
+        btn3_3.bind('<Enter>', on_enter)
+        btn3_3.bind('<Leave>', on_leave)
+
 
         # dashboard
         img8 = Image.open("Images/helpdesk.png")
@@ -87,8 +104,16 @@ class mainn:
         btn4 = Button(Frame1,image=self.photoimg8,command=self.dashboard, cursor="hand2")
         btn4.grid(row=0, column=4,padx=10)
 
-        btn4_4 = Button(Frame1, text="dashboard",command=self.dashboard, cursor="hand2", font=("times new roman", 15, "bold"),bg="darkblue", fg="white")
+        btn4_4 = Button(Frame1, text="Dashboard",command=self.dashboard, cursor="hand2", font=("times new roman", 15, "bold"),bg="darkblue", fg="white",width="12")
         btn4_4.grid(row=1, column=4)
+        
+        def on_leave(e):
+            btn4_4.config(background= 'darkblue', foreground= 'white')
+        def on_enter(e):
+            btn4_4.config(background='steel blue', foreground= "black")
+        
+        btn4_4.bind('<Enter>', on_enter)
+        btn4_4.bind('<Leave>', on_leave)
 
         # train data button
         img9 = Image.open("Images/trainFace-khom.png")
@@ -98,9 +123,17 @@ class mainn:
         btn5 = Button(Frame1, image=self.photoimg9,command=self.train, cursor="hand2")
         btn5.grid(row=0, column=5,padx=10)
 
-        btn5_5 = Button(Frame1, text="Train Data",command=self.train, cursor="hand2", font=("times new roman", 15, "bold"),
+        btn5_5 = Button(Frame1, text="Train Data",command=self.train, cursor="hand2", font=("times new roman", 15, "bold"),width="12",
                         bg="darkblue", fg="white")
         btn5_5.grid(row=1, column=5)
+        
+        def on_leave(e):
+            btn5_5.config(background= 'darkblue', foreground= 'white')
+        def on_enter(e):
+            btn5_5.config(background='steel blue', foreground= "black")
+        
+        btn5_5.bind('<Enter>', on_enter)
+        btn5_5.bind('<Leave>', on_leave)
 
         # Photos button
         img10 = Image.open("Images/photos.jpg")
@@ -110,10 +143,18 @@ class mainn:
         btn6 = Button(Frame1, image=self.photoimg10, cursor="hand2",command=self.open_img)
         btn6.grid(row=0, column=6,padx=10)
 
-        btn6_6 = Button(Frame1, text="Photos",command=self.open_img, cursor="hand2", font=("times new roman", 15, "bold"),bg="darkblue", fg="white")
+        btn6_6 = Button(Frame1, text="Photos",command=self.open_img, cursor="hand2", font=("times new roman", 15, "bold"),bg="darkblue", fg="white",width="12")
         btn6_6.grid(row=1, column=6)
+        
+        def on_leave(e):
+            btn6_6.config(background= 'darkblue', foreground= 'white')
+        def on_enter(e):
+            btn6_6.config(background='steel blue', foreground= "black")
+        
+        btn6_6.bind('<Enter>', on_enter)
+        btn6_6.bind('<Leave>', on_leave)
 
-        # Developer button
+        # About Us
         img11 = Image.open("Images/developer.png")
         img11 = img11.resize((150, 150), Image.ANTIALIAS)
         self.photoimg11 = ImageTk.PhotoImage(img11)
@@ -121,8 +162,16 @@ class mainn:
         btn7 = Button(Frame1, image=self.photoimg11, cursor="hand2")
         btn7.grid(row=0, column=7,padx=10)
 
-        btn7_7 = Button(Frame1, text="Developer", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white")
+        btn7_7 = Button(Frame1, text="About Us", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white",width="12")
         btn7_7.grid(row=1, column=7)
+        
+        def on_leave(e):
+            btn7_7.config(background= 'darkblue', foreground= 'white')
+        def on_enter(e):
+            btn7_7.config(background='steel blue', foreground= "black")
+        
+        btn7_7.bind('<Enter>', on_enter)
+        btn7_7.bind('<Leave>', on_leave)
 
         # Exit button
         img12 = Image.open("Images/exit-sign-neon-style_77399-144.jpg")
@@ -132,8 +181,16 @@ class mainn:
         btn8 = Button(Frame1, image=self.photoimg12, cursor="hand2",command=self.exit )
         btn8.grid(row=0, column=8)
 
-        btn8_8 = Button(Frame1, text="Exit",cursor="hand2",command=self.exit,  font=("times new roman", 15, "bold"),  bg="darkblue", fg="white")    
-        btn8_8.grid(row=1, column=8,padx=10)
+        btn8_8 = Button(Frame1, text="Exit",cursor="hand2",command=self.exit,  font=("times new roman", 15, "bold"),  bg="darkblue", fg="white",width="12")    
+        btn8_8.grid(row=1, column=8,padx=20)
+        
+        def on_leave(e):
+            btn8_8.config(background= 'darkblue', foreground= 'white')
+        def on_enter(e):
+            btn8_8.config(background='snow', foreground= "red")
+        
+        btn8_8.bind('<Enter>', on_enter)
+        btn8_8.bind('<Leave>', on_leave)
 
     # =================================== Functions =========================================
 

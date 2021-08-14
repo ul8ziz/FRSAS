@@ -12,8 +12,10 @@ class Register:
     def __init__(self, root):
         self.root = root
         self.root.title('Registration Form')
-        self.root.geometry("1450x720+0+0")
-
+        swidth= root.winfo_screenwidth() 
+        sheight= root.winfo_screenheight()
+        self.root.geometry("%dx%d" % (swidth, sheight))
+        self.root.background="DodgerBlue4"
         # ***************variabletr
         self.var_id = StringVar()
         self.var_fname = StringVar()
@@ -26,7 +28,7 @@ class Register:
 
         # #left image
         self.bg1 = ImageTk.PhotoImage(
-            file=r"img\6.jpg")
+            file=r"Images\face-recog-1024x678.jpg")
         left_lbl = Label(self.root, image=self.bg1)
         left_lbl.place(x=50, y=100, width=470, height=550)
         # main frame
@@ -34,7 +36,7 @@ class Register:
         frame.place(x=520, y=100, width=800, height=550)
 
         register_lbl = Label(frame, text="REGISTER HERE", font=(
-            "times new roman", 20, "bold"), fg="green", bg="white")
+            "times new roman", 20, "bold"), fg="#063970", bg="white")
         register_lbl.place(x=20, y=20)
 
         # ***lebal and entry
@@ -96,7 +98,7 @@ class Register:
         # button
 
         img = Image.open(
-            r"img\7.jpg")
+            r"Images\7.jpg")
         img = img.resize((200, 50), Image.ANTIALIAS)
         self.photoimage = ImageTk.PhotoImage(img)
         b1 = Button(frame, command=self.register_data,
@@ -104,7 +106,7 @@ class Register:
         b1.place(x=10, y=420, width=200)
 
         img1 = Image.open(
-            r"img\8.jpg")
+            r"Images\8.jpg")
         img1 = img1.resize((200, 50), Image.ANTIALIAS)
         self.photoimage1 = ImageTk.PhotoImage(img1)
         b1 = Button(frame, image=self.photoimage1,

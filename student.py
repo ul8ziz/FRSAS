@@ -9,12 +9,16 @@ from tkinter import messagebox
 import mysql.connector
 from mysql.connector import cursor
 import cv2
+from styling import styling
+from main import *
 
 
 class Student:
     def __init__(self, root):
-        self.root = root
-        self.root.geometry("1600x900+0+0")
+        self.root = root 
+        swidth= root.winfo_screenwidth() 
+        sheight= root.winfo_screenheight()
+        self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("FRAS")
         # ==================================variables ========================================
         self.var_dep = StringVar()
@@ -39,21 +43,39 @@ class Student:
         f_lbl.place(x=0, y=0, width=1600, height=120)
 
         # background image
-        img4 = Image.open("Images/face-recognition-logo.jpeg")
+        img4 = Image.open("Images/Home.jpg")
         img4 = img4.resize((1600, 1000), Image.ANTIALIAS)
-        self.photoimg4 = ImageTk.PhotoImage(img4)
+        self.photoimg4 = ImageTk.PhotoImage(img4)       
 
+        Frame1 = Frame(root, relief=RIDGE, bg="DodgerBlue4")
+        Frame1.place(x=0, y=0, width=swidth, height=230)
+        
+        img6 = Image.open("Images/homee.ico")
+        img6 = img6.resize((130, 130), Image.ANTIALIAS)
+        self.photoimg6 = ImageTk.PhotoImage(img6)
+
+        btn2 = Button(Frame1, image=self.photoimg6, cursor="hand2",width=90,height=90 ,command=self.home)
+        btn2.grid(row=0, column=2,padx=10,pady=5)
+
+        # Exit button
+        img12 = Image.open("Images/exit-sign-neon-style_77399-144.jpg")
+        img12 = img12.resize((90, 90), Image.ANTIALIAS)
+        self.photoimg12 = ImageTk.PhotoImage(img12)
+
+        btn88 = Button(Frame1, image=self.photoimg12, cursor="hand2" ,command=self.exite)
+        btn88.grid(row=0, column=8,padx=1300)
+         
+#############
         bg_img = Label(self.root, image=self.photoimg4)
-        bg_img.place(x=0, y=120, width=1600, height=1000)
-
-        title_lbl = Label(bg_img, text="STUDENT MANAGEMENT SYSTEM",font=("times new roman", 20, "bold"), bg="white", fg="black")
-        title_lbl.place(x=0, y=0, width=1600, height=50) 
+        bg_img.place(x=0, y=110, width=swidth, height=sheight)
+        title_lbl = Label(bg_img, text="STUDENT  INFORMATION  MANAGEMENT ",font=("times new roman", 20, "bold"), bg="white", fg="black")
+        title_lbl.place(x=0, y=12, width=1600, height=40) 
 
         main_frame = Frame(bg_img, bd=2)
-        main_frame.place(x=10, y=80, width=1500, height=1000)
+        main_frame.place(x=10, y=60, width=1500, height=1000)
 
          # left label frame
-        Left_frame = LabelFrame(main_frame, bd=2, relief=RIDGE, text="Student Information", font=("Calibri", 12, "bold"))
+        Left_frame = LabelFrame(main_frame, bd=1, relief=RIDGE, text="Student Information", font=("Calibri", 12, "bold"))
         Left_frame.place(x=0, y=0, width=730, height=600)
 
         img_left = Image.open("Images/grad2.jpg")
@@ -65,31 +87,31 @@ class Student:
        
          # Right label frame
         Right_frame = LabelFrame(main_frame, bd=2,bg="white",relief=RIDGE, text="Student Details", font=("Calibri", 12, "bold"))
-        Right_frame.place(x=750, y=10, width=740, height=600)
+        Right_frame.place(x=740, y=10, width=750, height=600)
 
         img_right = Image.open("Images/grad2.jpg")
         img_right = img_right.resize((720, 120), Image.ANTIALIAS)
         self.photoimg_right = ImageTk.PhotoImage(img_right)
 
         f_lbl = Label(Right_frame, image=self.photoimg_right)
-        f_lbl.place(x=5, y=0, width=710, height=120)
+        f_lbl.place(x=5, y=0, width=720, height=120)
 
         #Student's  Information
         student_frame = LabelFrame(main_frame, bd=2, bg="white", relief=RIDGE, text="Student's  Information",font=("Calibri", 12, "bold"), fg="green")
-        student_frame.place(x=5, y=150, width=720, height=600)
+        student_frame.place(x=5, y=150, width=720, height=450)
 
         # studentID
         studentID_label = Label(student_frame, text="StudentID:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
         studentID_label.grid(row=0, column=0, padx=10, sticky=W)
 
-        studentID_entry = ttk.Entry(student_frame, textvariable=self.var_std_id, width=20, font=("Calibri", 10, "bold"))
-        studentID_entry.grid(row=0, column=1, padx=10, sticky=W)
+        studentID_entry = ttk.Entry(student_frame, textvariable=self.var_std_id, width=30, font=("Calibri", 10, "bold"))
+        studentID_entry.grid(row=0, column=1, padx=10,pady=10, sticky=W)
 
         # student's Name
         stdName_label = Label(student_frame, text="Name:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
-        stdName_label.grid(row=1, column=0, padx=10, sticky=W)
+        stdName_label.grid(row=1, column=0, padx=10, sticky=W,)
 
-        stdName_entry = ttk.Entry(student_frame, textvariable=self.var_std_name, width=20, font=("Calibri", 10, "bold"))
+        stdName_entry = ttk.Entry(student_frame, textvariable=self.var_std_name, width=30, font=("Calibri", 10, "bold"))
         stdName_entry.grid(row=1, column=1, padx=10, sticky=W)
 
         # Department
@@ -104,7 +126,7 @@ class Student:
         dep_combo = ttk.Combobox(student_frame, textvariable=self.var_dep, font=("Calibri", 10, "bold"), state="readonly")
         dep_combo["values"] = (depcom)
         dep_combo.current(0)
-        dep_combo.grid(row=2, column=1, pady=10, sticky=W)
+        dep_combo.grid(row=2, column=1, padx=10,pady=10, sticky=W)
 
         # Year
         year_label = Label(student_frame, text="Year :", font=("Calibri", 10, "bold"), bg="white", fg="blue")
@@ -113,33 +135,15 @@ class Student:
         year_combo = ttk.Combobox(student_frame, textvariable=self.var_year, font=("Calibri", 10, "bold"), )
         year_combo["values"] = ("Select Year", "2021-22", "2022-23", "2023-24", "2024-25")
         year_combo.current(0)
-        year_combo.grid(row=3, column=1,  sticky=W)
-
-
-        # Grop 
-        # class_div_lable = Label(student_frame, text="Grop :", font=("Calibri", 10, "bold"), bg="white",fg="blue")
-        # class_div_lable.grid(row=1, column=0, padx=10, sticky=W)
-
-        # gender_combo = ttk.Combobox(student_frame, textvariable=self.var_div, font=("Calibri", 10, "bold"), state="readonly")
-        # gender_combo["values"] = ("A","B")
-        # gender_combo.current(0)
-        # gender_combo.grid(row=1, column=1, pady=5, sticky=W)
-
-        # # studentRollNo
-        # studentRoll_label = Label(student_frame, text="Roll No:", font=("Calibri", 10, "bold"), bg="white", fg="blue")
-        # studentRoll_label.grid(row=1, column=2, padx=10, sticky=W)
-
-        # studentRoll_entry = ttk.Entry(student_frame, textvariable=self.var_roll, width=20, font=("Calibri", 10, "bold"))
-        # studentRoll_entry.grid(row=1, column=3, padx=10, sticky=W)
-
-        # Gender
+        year_combo.grid(row=3, column=1, padx=10, sticky=W)
+        #gender
         gender_label = Label(student_frame, text="Gender:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
         gender_label.grid(row=4, column=0, padx=10, sticky=W)
 
         gender_combo = ttk.Combobox(student_frame, textvariable=self.var_gender, font=("Calibri", 10, "bold"), state="readonly")
         gender_combo["values"] = ("Male","Female")
         gender_combo.current(0)
-        gender_combo.grid(row=4, column=1,  pady=5, sticky=W)
+        gender_combo.grid(row=4, column=1,  pady=10,padx=10, sticky=W)
 
         # # DOB
         # DOB_label = Label(student_frame, text="DOB:", font=("Calibri", 10, "bold"), bg="white", fg="blue")
@@ -153,20 +157,20 @@ class Student:
         Email_label.grid(row=5, column=0, padx=10, sticky=W)
 
         Email_entry = ttk.Entry(student_frame, textvariable=self.var_email, width=20, font=("Calibri", 10, "bold"))
-        Email_entry.grid(row=5, column=1, padx=10, sticky=W)
+        Email_entry.grid(row=5, column=1, padx=10,pady=10, sticky=W)
 
         # student's Contact Info
         phone_label = Label(student_frame, text="Contact No.:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
         phone_label.grid(row=6, column=0, padx=10, sticky=W)
 
-        phone_entry = ttk.Entry(student_frame, textvariable=self.var_phone, width=20, font=("Calibri", 10, "bold"))
+        phone_entry = ttk.Entry(student_frame, textvariable=self.var_phone, width=30, font=("Calibri", 10, "bold"))
         phone_entry.grid(row=6, column=1, padx=10, sticky=W)
 
         # student's Address
         address_label = Label(student_frame, text="Address:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
         address_label.grid(row=7, column=0, padx=10, sticky=W)
 
-        address_entry = ttk.Entry(student_frame, textvariable=self.var_address, width=20, font=("Calibri", 10, "bold"))
+        address_entry = ttk.Entry(student_frame, textvariable=self.var_address, width=30, font=("Calibri", 10, "bold"))
         address_entry.grid(row=7, column=1,pady=5, padx=10, sticky=W)
 
         #Teacher name
@@ -192,7 +196,7 @@ class Student:
         radiobtn2.grid(row=8, column=1,pady=5,padx=10)
         # ==================================Buttons Frame========================================
         btnFrame = Frame(student_frame, relief=RIDGE, bg="white")
-        btnFrame.place(x=10, y=250, width=715, height=35)
+        btnFrame.place(x=5, y=300, width=710, height=35)
 
         save_btn = Button(btnFrame, text="Save", command=self.add_data, width=17, font=('arial', 13, 'bold'), bg="red", fg="white")
         save_btn.grid(row=0, column=0)
@@ -207,17 +211,16 @@ class Student:
         reset_btn.grid(row=0, column=3)
 
         btnFrame1 = Frame(student_frame, relief=RIDGE, bg="white")
-        btnFrame1.place(x=10, y=300, width=715, height=35)
+        btnFrame1.place(x=5, y=340, width=710, height=35)
 
-        capture_photo_btn = Button(btnFrame1, text="Capture Photo Sample",command=self.generate_dataset, width=34, font=('arial', 13, 'bold'), bg="red", fg="white")
+        capture_photo_btn = Button(btnFrame1, text="Capture Photo Sample",command=self.generate_dataset, width=69, font=('arial', 13, 'bold'), bg="red", fg="white")
         capture_photo_btn.grid(row=0, column=0)
 
-        update_photo_btn = Button(btnFrame1, text="Update Photo Sample", width=34, font=('arial', 13, 'bold'), bg="red", fg="white")
-        update_photo_btn.grid(row=0, column=1)
+        
 
         # ==================================Search Systems========================================
         search_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE, text="Search System",font=("Calibri", 12, "bold"), fg="green")
-        search_frame.place(x=5, y=60, width=715, height=60)
+        search_frame.place(x=5, y=60, width=720, height=60)
         
         search_label = Label(search_frame, text=" Search By: ", font=("Calibri", 10, "bold"), bg="blue",fg="white")
         search_label.grid(row=0, column=0, padx=10,pady=5, sticky=W)
@@ -238,7 +241,7 @@ class Student:
 
         # ==================================Table Frame==========================================
         table_frame = Frame(Right_frame, bd=2, bg="white", relief=RIDGE)
-        table_frame.place(x=5, y=120, width=720, height=430)
+        table_frame.place(x=5, y=120, width=730, height=450)
 
         scroll_x = ttk.Scrollbar(table_frame, orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(table_frame, orient=VERTICAL)
@@ -262,7 +265,7 @@ class Student:
         self.student_table.heading("photo", text="PhotoSampleStatus")
         self.student_table["show"] = "headings"
 
-        self.student_table.column("id", width=80)
+        self.student_table.column("id", width=60)
         self.student_table.column("dep", width=80)
         self.student_table.column("year", width=80)
         self.student_table.column("name", width=80)
@@ -467,7 +470,18 @@ class Student:
             except Exception as es:
                     messagebox.showerror("Error",f"You have error here :{str(es)}",parent=self.root)
                
-    #=========uplode img======================
+    #========= home======================
+    def home(self):
+             self.new_window = Toplevel(self.root)
+             self.app = mainn(self.new_window)
+
+    def exite(self):
+             self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+             if self.exit >0:
+                  self.root.destroy()
+             else:
+                  return
+
 
 
 if __name__ == "__main__":

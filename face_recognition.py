@@ -12,15 +12,18 @@ from mysql.connector import cursor
 import mysql.connector
 from time import strftime
 from datetime import datetime
+from main import *
 
 
 class face_recognition:
     def __init__(self, root):
         self.root = root
-        self.root.geometry("1530x790+0+0")
+        swidth= root.winfo_screenwidth() 
+        sheight= root.winfo_screenheight()
+        self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Face Recognition System")
 
-        title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",font=("arial", 30, "bold"), bg="white", fg="red")
+        title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",font=("arial", 30, "bold"), bg="white", fg="#063970")
         title_lbl.place(x=0, y=3, width=1530, height=45) 
 
     #  image
@@ -29,7 +32,7 @@ class face_recognition:
         self.photoimg1 = ImageTk.PhotoImage(img1)
 
         f_lb2 = Label(self.root, image=self.photoimg1)
-        f_lb2.place(x=0, y=55, width=650, height=700)
+        f_lb2.place(x=0, y=100, width=650, height=700)
 
     #  image 2
         img2 = Image.open("Images/face-recognition-attendance.jpg")
@@ -37,19 +40,55 @@ class face_recognition:
         self.photoimg = ImageTk.PhotoImage(img2)
 
         f_lbl = Label(self.root, image=self.photoimg)
-        f_lbl.place(x=650, y=55, width=950, height=700)
+        f_lbl.place(x=650, y=100, width=950, height=700)
 
         self.var_depp = StringVar()
         self.var_semester = StringVar()
         self.var_course = StringVar()
         self.var_level = StringVar()
+        
+        Frame1 = Frame(root, relief=RIDGE, bg="#063970")
+        Frame1.place(x=0, y=0, width=swidth, height=110)
+        
+        img6 = Image.open("Images/homee.ico")
+        img6 = img6.resize((130, 130), Image.ANTIALIAS)
+        self.photoimg6 = ImageTk.PhotoImage(img6)
 
-        frame = Frame(self.root, bd=2, bg="white", relief=RIDGE)
-        frame.place(x=5, y=120, width=720, height=430)
+        btn2 = Button(Frame1, image=self.photoimg6, cursor="hand2",width=90,height=90 ,command=self.home)
+        btn2.grid(row=0, column=2,padx=10,pady=5)
+
+        # Exit button
+        img12 = Image.open("Images/exit-sign-neon-style_77399-144.jpg")
+        img12 = img12.resize((90, 90), Image.ANTIALIAS)
+        self.photoimg12 = ImageTk.PhotoImage(img12)
+
+        btn88 = Button(Frame1, image=self.photoimg12, cursor="hand2" ,command=self.exite)
+        btn88.grid(row=0, column=8,padx=1300)
+        
+        frame = Frame(self.root, bd=2, bg="#063970", relief=RIDGE)
+        frame.place(x=200, y=400, width=800, height=50)
+        
+        # Level
+        sem_label = Label(frame, text="Level:", font=("Calibri", 10, "bold"), bg="#063970", fg="white")
+        sem_label.grid(row=0, column=0, padx=40, sticky=W)
+
+        sem_combo = ttk.Combobox(frame, textvariable=self.var_level, font=("Calibri", 10, "bold"), state="readonly")
+        sem_combo["values"] = ("Select Level", "1", "2", "3", "4")
+        sem_combo.current(0)
+        sem_combo.grid(row=0, column=1, padx=2, pady=10, sticky=W)
+
+        # Semester
+        sem_label = Label(frame, text="Semester:", font=("Calibri", 10, "bold"), bg="#063970", fg="white")
+        sem_label.grid(row=0, column=3, padx=10, sticky=W)
+
+        sem_combo = ttk.Combobox(frame, textvariable=self.var_semester, font=("Calibri", 10, "bold"), state="readonly")
+        sem_combo["values"] = ("Select Semester", "1", "2")
+        sem_combo.current(0)
+        sem_combo.grid(row=0, column=4, padx=2, pady=10, sticky=W)
 
         # Course
-        course_label = Label(frame, text="Course :", font=("Calibri", 10, "bold"), bg="white", fg="blue")
-        course_label.grid(row=0, column=2, padx=10, sticky=W)
+        course_label = Label(frame, text="Course :", font=("Calibri", 10, "bold"), bg="#063970", fg="white")
+        course_label.grid(row=0, column=5, padx=10, sticky=W)
 
         conn = mysql.connector.connect(host="localhost",username="root",password="", database="fras_db"    )
         my_cursor = conn.cursor()
@@ -59,29 +98,12 @@ class face_recognition:
         course_combo = ttk.Combobox(frame, textvariable=self.var_course, font=("Calibri", 10, "bold"), state="readonly")
         course_combo["values"] = (course_com)
         course_combo.current(0)
-        course_combo.grid(row=0, column=3, pady=0, sticky=W)
+        course_combo.grid(row=0, column=6, pady=0, sticky=W)
 
-        # Level
-        sem_label = Label(frame, text="Level:", font=("Calibri", 10, "bold"), bg="white", fg="blue")
-        sem_label.grid(row=1, column=2, padx=10, sticky=W)
-
-        sem_combo = ttk.Combobox(frame, textvariable=self.var_level, font=("Calibri", 10, "bold"), state="readonly")
-        sem_combo["values"] = ("Select Level", "1", "2", "3", "4")
-        sem_combo.current(0)
-        sem_combo.grid(row=1, column=3, padx=2, pady=10, sticky=W)
-
-        # Semester
-        sem_label = Label(frame, text="Semester:", font=("Calibri", 10, "bold"), bg="white", fg="blue")
-        sem_label.grid(row=2, column=0, padx=10, sticky=W)
-
-        sem_combo = ttk.Combobox(frame, textvariable=self.var_semester, font=("Calibri", 10, "bold"), state="readonly")
-        sem_combo["values"] = ("Select Semester", "1", "2")
-        sem_combo.current(0)
-        sem_combo.grid(row=2, column=1, padx=2, pady=10, sticky=W)
 
        #button
-        Butt = Button(f_lbl, text="Tak Attendance ",command=self.face_recog, cursor="hand2", font=("times new roman",18, "bold"),bg="darkgreen", fg="white")
-        Butt.place(x=365, y=620, width=200, height=40)
+        Butt = Button(f_lbl, text="Tak Attendance ",command=self.face_recog, cursor="hand2", font=("times new roman",18, "bold"),bg="#063970", fg="white")
+        Butt.place(x=390, y=300, width=200, height=40)
         
     #===============attendance =============================
     def mark_attendance(self,i,n,d):
@@ -156,7 +178,18 @@ class face_recognition:
             video_cap.release()
             cv2.destroyAllWindows()
         except Exception as es:
-                messagebox.showerror("Error", f"because of :{str(es)}", parent=self.root)    
+                messagebox.showerror("Error", f"because of :{str(es)}", parent=self.root)   
+     #========= home======================
+    def home(self):
+             self.new_window = Toplevel(self.root)
+             self.app = mainn(self.new_window)
+
+    def exite(self):
+             self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+             if self.exit >0:
+                  self.root.destroy()
+             else:
+                  return 
 
 if __name__ == "__main__":
     root = Tk()

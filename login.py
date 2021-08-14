@@ -16,57 +16,61 @@ class login_window:
         self.root.title("Login")
         self.root.geometry("1550x800+0+0")
 
-        frame = Frame(self.root, bg="black")
+        frame = Frame(self.root, bg="white")
         frame.place(x=610, y=170, width=340, height=450)
 
-        img1 = Image.open(
-            r"img\2.jpg")
-
+        img1 = Image.open("images\log.png")
         img1 = img1.resize((100, 100), Image.ANTIALIAS)
         self.photoimage1 = ImageTk.PhotoImage(img1)
-        lblimg1 = Label(image=self.photoimage1, bg="black", borderwidth=0)
+        lblimg1 = Label(image=self.photoimage1, bg="white", borderwidth=0)
         lblimg1.place(x=730, y=175, width=100, height=100)
 
-        get_str = Label(frame, text="Get Started", font=(
-            "times new roman", 20, "bold"), bg="black", fg="orange")
-        get_str.place(x=100, y=100)
+        get_str = Label(frame, text="Get Started", font=("times new roman", 20, "bold"), bg="white", fg="#063970")
+        get_str.place(x=100, y=120)
 
         # labels
-        username_lbl = Label(frame, text="Username", font=(
-            "times new roman", 15, "bold"), bg="black", fg="orange")
-        username_lbl.place(x=65, y=152)
+        username_lbl = Label(frame, text="Username", font=("times new roman", 15, "bold"), bg="white", fg="#063970")
+        username_lbl.place(x=65, y=172)
 
         self.txtuser = ttk.Entry(frame, font=("times new roman", 15, "bold"))
-        self.txtuser.place(x=40, y=180, width=270)
+        self.txtuser.place(x=40, y=200, width=270)
 
-        password_lbl = Label(frame, text="Password", font=(
-            "times new roman", 15, "bold"), bg="black", fg="orange")
-        password_lbl.place(x=65, y=225)
+        password_lbl = Label(frame, text="Password", font=("times new roman", 15, "bold"), bg="white", fg="#063970")
+        password_lbl.place(x=65, y=245)
 
         self.txtpass = ttk.Entry(frame, show="*",font=("times new roman", 15, "bold"))
-        self.txtpass.place(x=40, y=250, width=270)
+        self.txtpass.place(x=40, y=270, width=270)
 
         # icon.............
-        img2 = Image.open(
-            r"img\2.jpg")
-
+        img2 = Image.open("images\\2.jpg")
         img2 = img2.resize((20, 20), Image.ANTIALIAS)
         self.photoimage2 = ImageTk.PhotoImage(img2)
-        lblimg2 = Label(image=self.photoimage2, bg="black", borderwidth=0)
-        lblimg2.place(x=650, y=323, width=25, height=25)
+        lblimg2 = Label(image=self.photoimage2, bg="white", borderwidth=0)
+        lblimg2.place(x=650, y=343, width=25, height=25)
 
-        img3 = Image.open(
-            r"img\3.jpg")
-
+        img3 = Image.open("images\\3.jpg")
         img3 = img3.resize((20, 20), Image.ANTIALIAS)
         self.photoimage3 = ImageTk.PhotoImage(img3)
-        lblimg3 = Label(image=self.photoimage3, bg="black", borderwidth=0)
-        lblimg3.place(x=650, y=397, width=25, height=25)
+        lblimg3 = Label(image=self.photoimage3, bg="white", borderwidth=0,)
+        lblimg3.place(x=650, y=415, width=25, height=25)
+
 
         # loginBuutton
-        loginbtn = Button(frame, command=self.login, text="Login", font=(
-            "times new roman", 15, "bold"), bd=3, relief=RIDGE, bg="red", fg="orange")
-        loginbtn.place(x=110, y=300, width=120, height=35)
+        loginbtn = Button( command=self.login, text="Login", font=("times new roman", 15, "bold"), bd=3, relief=RIDGE, bg="#063970", fg="white")
+        loginbtn.place(x=700, y=500, width=170, height=35)
+
+
+        #Button_with hover effect
+    def on_entera(self):
+        loginbtn.config(background= 'darkblue', foreground= '#063970')
+
+    def on_leavea(self):
+        loginbtn.config(background='steel blue', foreground= "black")
+
+        loginbtn.bind("<Enter>", on_entera)
+        loginbtn.bind("<Leave>", on_leavea)
+
+   
 
     def login(self):
         try:    
