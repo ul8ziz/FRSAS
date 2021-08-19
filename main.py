@@ -37,7 +37,7 @@ class mainn:
         Frame1.place(x=0, y=0, width=swidth, height=210)
 
         # student button
-        img5 = Image.open("Images/student.jpg")
+        img5 = Image.open("Images/student.png")
         img5 = img5.resize((180, 150), Image.ANTIALIAS)
         self.photoimg5 = ImageTk.PhotoImage(img5)
 
@@ -195,12 +195,10 @@ class mainn:
     # =================================== Functions =========================================
 
     def student_details(self):
-        self.new_window = Toplevel(self.root)
-        self.app = Student(self.new_window)
+        messagebox.showerror("Error","You are not admin")
 
     def dashboard(self):
-        self.new_window = Toplevel(self.root)
-        self.app = dashboard(self.new_window)
+       messagebox.showerror("Error","You are not admin")
 
 
     def face_recognition(self):
@@ -212,11 +210,10 @@ class mainn:
         self.app = attendance(self.new_window)   
 
     def train(self):
-        self.new_window = Toplevel(self.root)
-        self.app = train(self.new_window)   
+       messagebox.showerror("Error","You are not admin")
 
     def open_img(self):
-        os.startfile("data_set")
+        messagebox.showerror("Error","You are not admin")
     
     def exit(self):
         self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)

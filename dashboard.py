@@ -9,6 +9,9 @@ from tkinter import messagebox
 import mysql.connector
 from mysql.connector import cursor
 import cv2
+from register import *
+from main import *
+
 
 class dashboard:
     def __init__(self, root):
@@ -20,15 +23,31 @@ class dashboard:
         self.root.config(bg = '#154c79')
         #self.root.wm_attributes('-transparentcolor','#add123')
 
+        img4 = Image.open("Images/home.jpg")
+        img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
+        self.photoimg4 = ImageTk.PhotoImage(img4)
 
+        bg_img = Label(self.root, image=self.photoimg4)
+        bg_img.place(x=0, y=0, width=swidth, height=sheight)
         #################varbales
         self.var_depp = StringVar()
         self.var_tracher = StringVar()
+        self.var_cources = StringVar()
+
         
         Frame1 = Frame(root, relief=RIDGE, bg="#063970")
         Frame1.place(x=0, y=0, width=swidth, height=110)
+
         
-        img6 = Image.open("Images/homee.ico")
+##########logo
+        i = Image.open("Images/icon.png")
+        i = i.resize((120, 120))
+        self.logo = ImageTk.PhotoImage(i)
+        f = Label(Frame1, image=self.logo)
+        f.place(x=700, y=-5, width=120, height=120 )
+
+        
+        img6 = Image.open("Images/homee.png")
         img6 = img6.resize((130, 130), Image.ANTIALIAS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 
@@ -45,7 +64,7 @@ class dashboard:
 
         #============Department frame================
         department_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE,text="Department Information",font=("Calibri", 13, "bold"), fg="#063970")
-        department_frame.place(x=5, y=120, width=720, height=250)
+        department_frame.place(x=5, y=120, width=720, height=210)
         
         #Department entry
         department_label = Label(department_frame, text="New Department :", font=("Calibri", 10, "bold"), bg="white")
@@ -90,7 +109,7 @@ class dashboard:
 
  #============Tracher_frame==============================================================================================================
         Tracher_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE, text="Tracher Information",font=("Calibri", 13, "bold"), fg="#063970")
-        Tracher_frame.place(x=5, y=400, width=720, height=250)
+        Tracher_frame.place(x=5, y=337, width=720, height=230)
         
         #Tracher entry
         Tracher_label = Label(Tracher_frame, text="New Tracher :", font=("Calibri", 10, "bold"), bg="white")
@@ -99,14 +118,16 @@ class dashboard:
         Tracher_entry = ttk.Entry(Tracher_frame, width=20,textvariable=self.var_tracher, font=("Calibri", 10, "bold"))
         Tracher_entry.grid(row=0, column=1,pady=30, padx=0, sticky=W)
 
-        save_btn = Button(Tracher_frame, text="Save", command=self.add_tracher, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
-        save_btn.grid(row=2, column=0)
         
         update_btn = Button(Tracher_frame, text="Update",command=self.fetch_Tracher, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         update_btn.grid(row=2, column=1)
 
         delete_btn = Button(Tracher_frame, text="Delete", command=self.delete_Tracher,width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
         delete_btn.grid(row=2, column=2)
+
+        add_new_tea_btn = Button(Tracher_frame, text="Add New Teacher",command=self.new_teaher, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
+        add_new_tea_btn.grid(row=2, column=0,pady=10)
+
 
         # =======Table Frame
         table__frame = Frame(Tracher_frame, bd=2, bg="white", relief=RIDGE)
@@ -132,6 +153,54 @@ class dashboard:
 
         self.Tracher_table_frame.bind("<ButtonRelease>",self.get_Tracher_cursor)
         self.fetch_Tracher()
+
+
+        ###################cources
+         #============cources frame================
+        cources_frame = LabelFrame(self.root, bd=2, bg="white", relief=RIDGE,text="cources Information",font=("Calibri", 13, "bold"), fg="#063970")
+        cources_frame.place(x=5, y=580, width=720, height=220)
+        
+        #cources entry
+        department_label = Label(cources_frame, text="New cources :", font=("Calibri", 10, "bold"), bg="white")
+        department_label.grid(row=0, column=0,pady=0, padx=20, sticky=W)
+
+        department_entry = ttk.Entry(cources_frame, width=20,textvariable=self.var_cources, font=("Calibri", 10, "bold"))
+        department_entry.grid(row=0, column=1,pady=30, padx=0, sticky=W)
+
+        save_btn = Button(cources_frame, text="Save", command=self.add_cources, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
+        save_btn.grid(row=2, column=0)
+        
+        update_btn = Button(cources_frame, text="Update",command=self.fetch_course_data, width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
+        update_btn.grid(row=2, column=1)
+
+        delete_btn = Button(cources_frame, text="Delete", command=self.delete_course,width=15, font=('arial', 11, 'bold'), bg="#063970", fg="white")
+        delete_btn.grid(row=2, column=2)
+
+        # =======cources Table 
+        table_cources = Frame(cources_frame, bd=2, bg="white", relief=RIDGE)
+        table_cources.place(x=450, y=0, width=250, height=200)
+
+        scroll_x = ttk.Scrollbar(table_cources, orient=HORIZONTAL)
+        scroll_y = ttk.Scrollbar(table_cources, orient=VERTICAL)
+
+        self.cources_table = ttk.Treeview(table_cources, column=("id", "course"), xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        scroll_x.pack(side=BOTTOM, fill=X)
+        scroll_y.pack(side=RIGHT, fill=Y)
+        scroll_x.config(command=self.cources_table.xview)
+        scroll_y.config(command=self.cources_table.yview)
+
+        self.cources_table.heading("id", text="course")
+        
+        self.cources_table.heading("course", text="course")
+        self.cources_table["show"] = "headings"
+
+        self.cources_table.column("id", width=70)
+        self.cources_table.column("course", width=100)
+        self.cources_table.pack(fill=BOTH, expand=1)
+
+        self.cources_table.bind("<ButtonRelease>",self.get_var_cources_cursor)
+        self.fetch_course_data()
+
 
         #======================Fun
     #add new  Department  
@@ -198,26 +267,91 @@ class dashboard:
         content=self.Department_table.item(cursor_focus)
         data=content["values"] 
         self.var_depp.set(data[1])
-
-        #add new  Tracher  
-    #++++++++++++++++++++++++  add teacher
-    def add_tracher(self):
-        if self.var_depp.get() == "Select Tracher" or self.var_tracher.get() == "" :
+    ######################################cources
+    #== =======================fetch data cources =======
+    def fetch_course_data(self):
+        conn = mysql.connector.connect(host="localhost",
+                                               username="root",
+                                               password="",
+                                               database="fras_db"
+                                        )
+        my_cursor = conn.cursor()
+        my_cursor.execute("select * from courses")
+        data=my_cursor.fetchall()
+        if len(data)!=0:
+            self.cources_table.delete(*self.cources_table.get_children())
+            for i in data:
+                self.cources_table.insert("",END,values=i)
+            conn.commit()
+        conn.close() 
+     #add new  cources  
+    def add_cources(self):
+        if self.var_cources.get() == "Select courses" or self.var_cources.get() == "" :
             messagebox.showerror("Error", "The Field empty", parent=self.root)
         else:
             try:
                 conn = mysql.connector.connect(host="localhost",username="root",password="",database="FRAS_DB")                                              
                 my_cursor = conn.cursor()
-                my_cursor.execute("insert into Tracher (Tracher_name) values(%s)",
+                my_cursor.execute("insert into courses (course_name) values(%s)",
                                   (
-                                      self.var_tracher.get(),
+                                      self.var_cources.get(),
                                   ))
                 conn.commit()
                 conn.close()
-                self.fetch_data()
-                messagebox.showinfo("Done", "Tracher have been added successfully", parent=self.root)
+                self.fetch_course_data()
+                messagebox.showinfo("Done", "course have been added successfully", parent=self.root)
             except Exception as es:
                 messagebox.showerror("Error", f"Due To:{str(es)}", parent=self.root)
+    
+    #==============delete cources============================
+    def delete_course(self):
+        if self.var_cources.get() == "":
+            messagebox.showerror("Error", "course Most be Required", parent=self.root)
+        else:
+            try:
+                delete=messagebox.askyesno("course Delete Page ","do you want to Delete this course  ?", parent=self.root)
+                if delete>0:
+                    conn = mysql.connector.connect(host="localhost",username="root", password="",database="FRAS_DB")
+                    my_cursor = conn.cursor()
+                    query="DELETE FROM  courses WHERE course_name=%s"
+                    val=(self.var_cources.get(),)
+                    my_cursor.execute(query,val)                  
+                else:
+                    if not delete:
+                           return
+                conn.commit()
+                self.fetch_course_data()
+                conn.close()
+                messagebox.showinfo("Delet","course   Delete completed.",parent=self.root)
+            except Exception as es:
+               messagebox.showerror("Error",f"Due To :{str(es)}",parent=self.root)
+    
+    #======================== Get cursor cources ===============
+    def get_var_cources_cursor(self,event=""):
+        cursor_focus=self.table_cources.focus()
+        content=self.table_cources.item(cursor_focus)
+        data=content["values"] 
+        self.var_cources.set(data[1])
+
+        #add new  Tracher  
+    #++++++++++++++++++++++++  add teacher
+    # def add_tracher(self):
+    #     if self.var_depp.get() == "Select teacher" or self.var_tracher.get() == "" :
+    #         messagebox.showerror("Error", "The Field empty", parent=self.root)
+    #     else:
+    #         try:
+    #             conn = mysql.connector.connect(host="localhost",username="root",password="",database="FRAS_DB")                                              
+    #             my_cursor = conn.cursor()
+    #             my_cursor.execute("insert into teacher (teacher_name) values(%s)",
+    #                               (
+    #                                   self.var_tracher.get(),
+    #                               ))
+    #             conn.commit()
+    #             conn.close()
+    #             self.fetch_data()
+    #             messagebox.showinfo("Done", "teacher have been added successfully", parent=self.root)
+    #         except Exception as es:
+    #             messagebox.showerror("Error", f"Due To:{str(es)}", parent=self.root)
 
     #== =======================fetch  Tracher =======
     def fetch_Tracher(self):
@@ -278,6 +412,9 @@ class dashboard:
                   self.root.destroy()
              else:
                   return 
+    def new_teaher(self):
+             self.new_window = Toplevel(self.root)
+             self.app = Register(self.new_window)
 
 
 

@@ -6,6 +6,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk  
 from tkinter import messagebox
 import mysql.connector
+from main import *
 
 
 class Register:
@@ -26,14 +27,41 @@ class Register:
         self.var_pass = StringVar()
         self.var_confpass = StringVar()
 
+################# main
+        Frame1 = Frame(root, relief=RIDGE, bg="#063970")
+        Frame1.place(x=0, y=0, width=swidth, height=110)
+        
+##########logo
+        i = Image.open("Images/icon.png")
+        i = i.resize((120, 120))
+        self.logo = ImageTk.PhotoImage(i)
+        f = Label(Frame1, image=self.logo)
+        f.place(x=700, y=-5, width=120, height=120 )
+
+        img6 = Image.open("Images/homee.png")
+        img6 = img6.resize((130, 130), Image.ANTIALIAS)
+        self.photoimg6 = ImageTk.PhotoImage(img6)
+
+        btn2 = Button(Frame1, image=self.photoimg6, cursor="hand2",width=90,height=90 ,command=self.home)
+        btn2.grid(row=0, column=2,padx=10,pady=5)
+
+        # Exit button
+        img12 = Image.open("Images/exit-sign-neon-style_77399-144.jpg")
+        img12 = img12.resize((90, 90), Image.ANTIALIAS)
+        self.photoimg12 = ImageTk.PhotoImage(img12)
+
+        btn88 = Button(Frame1, image=self.photoimg12, cursor="hand2" ,command=self.exite)
+        btn88.grid(row=0, column=8,padx=1300)
+
+
         # #left image
         self.bg1 = ImageTk.PhotoImage(
             file=r"Images\face-recog-1024x678.jpg")
         left_lbl = Label(self.root, image=self.bg1)
-        left_lbl.place(x=50, y=100, width=470, height=550)
+        left_lbl.place(x=110, y=150, width=470, height=550)
         # main frame
         frame = Frame(self.root, bg="white")
-        frame.place(x=520, y=100, width=800, height=550)
+        frame.place(x=580, y=150, width=800, height=550)
 
         register_lbl = Label(frame, text="REGISTER HERE", font=(
             "times new roman", 20, "bold"), fg="#063970", bg="white")
@@ -103,15 +131,9 @@ class Register:
         self.photoimage = ImageTk.PhotoImage(img)
         b1 = Button(frame, command=self.register_data,
                     image=self.photoimage, borderwidth=0, cursor="hand2")
-        b1.place(x=10, y=420, width=200)
+        b1.place(x=40, y=420, width=200)
 
-        img1 = Image.open(
-            r"Images\8.jpg")
-        img1 = img1.resize((200, 50), Image.ANTIALIAS)
-        self.photoimage1 = ImageTk.PhotoImage(img1)
-        b1 = Button(frame, image=self.photoimage1,
-                    borderwidth=0, cursor="hand2")
-        b1.place(x=330, y=420, width=200)
+        
 
 # ................fuction
 
@@ -142,6 +164,17 @@ class Register:
                 messagebox.showinfo("Success","Register Successfully")
             conn.commit()
             conn.close()
+    #========= home======================
+    def home(self):
+             self.new_window = Toplevel(self.root)
+             self.app = mainn(self.new_window)
+
+    def exite(self):
+             self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+             if self.exit >0:
+                  self.root.destroy()
+             else:
+                  return 
 
 if __name__ == "__main__":
     root = Tk()

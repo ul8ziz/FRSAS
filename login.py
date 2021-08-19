@@ -7,8 +7,7 @@ from PIL import Image, ImageTk
 from tkinter import messagebox
 import mysql.connector
 from main import mainn
-    
-
+from Admin_main import Admin_main
 
 class login_window:
     def __init__(self, root):
@@ -18,6 +17,7 @@ class login_window:
 
         frame = Frame(self.root, bg="white")
         frame.place(x=610, y=170, width=340, height=450)
+        
 
         img1 = Image.open("images\log.png")
         img1 = img1.resize((100, 100), Image.ANTIALIAS)
@@ -96,8 +96,11 @@ class login_window:
                 if "Admin" in row:
                     messagebox.showinfo("Welcome","Hi "+str(a[1])+"You are admin")
                     self.new_window = Toplevel(self.root)
-                    self.app = mainn(self.new_window) 
+                    self.app = Admin_main(self.new_window) 
                     #self.login_window.destroy()
+                else:
+                    self.new_window = Toplevel(self.root)
+                    self.app = mainn(self.new_window)
                 conn.commit()
                 conn.close()
         except Exception as es:

@@ -9,6 +9,8 @@ import mysql.connector
 import os
 import numpy as np
 import cv2
+from main import *
+
 
 class train:
     def __init__(self, root):
@@ -17,38 +19,50 @@ class train:
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Train Data")
+        img4 = Image.open("Images/home.jpg")
+        img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
+        self.photoimg4 = ImageTk.PhotoImage(img4)
 
-        title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",font=("arial", 35, "bold"), bg="white", fg="#063970")
-        title_lbl.place(x=0, y=0, width=1530, height=45) 
+        bg_img = Label(self.root, image=self.photoimg4)
+        bg_img.place(x=0, y=0, width=swidth, height=sheight)
 
-        # first image
-        img1 = Image.open("Images/OIP.jpeg")
-        img1 = img1.resize((1530, 325), Image.ANTIALIAS)
-        self.photoimg1 = ImageTk.PhotoImage(img1)
+        Frame1 = Frame(root, relief=RIDGE, bg="#063970")
+        Frame1.place(x=0, y=0, width=swidth, height=110)
+        
+##########logo
+        i = Image.open("Images/icon.png")
+        i = i.resize((120, 120))
+        self.logo = ImageTk.PhotoImage(i)
+        f = Label(Frame1, image=self.logo)
+        f.place(x=700, y=-5, width=120, height=120 )
 
-        f_lbl = Label(self.root, image=self.photoimg1)
-        f_lbl.place(x=0, y=55, width=1530, height=325)
+        
+        img6 = Image.open("Images/homee.png")
+        img6 = img6.resize((130, 130), Image.ANTIALIAS)
+        self.photoimg6 = ImageTk.PhotoImage(img6)
 
-       #button
+        btn2 = Button(Frame1, image=self.photoimg6, cursor="hand2",width=90,height=90 ,command=self.home)
+        btn2.grid(row=0, column=2,padx=10,pady=5)
+
+        # Exit button
+        img12 = Image.open("Images/exit-sign-neon-style_77399-144.jpg")
+        img12 = img12.resize((90, 90), Image.ANTIALIAS)
+        self.photoimg12 = ImageTk.PhotoImage(img12)
+
+        btn88 = Button(Frame1, image=self.photoimg12, cursor="hand2" ,command=self.exite)
+        btn88.grid(row=0, column=8,padx=1300)
+        
+        #button
         Butt = Button(self.root, text="Train Data", command=self.train_classifier, cursor="hand2", font=("times new roman",25, "bold"),bg="#063970", fg="white")
-        Butt.place(x=0, y=380, width=1530, height=60)
+        Butt.place(x=540, y=380, width=400, height=60)
 
-        # second image
-        img2 = Image.open("Images/OIP.jpeg")
-        img2 = img2.resize((1530, 325), Image.ANTIALIAS)
-        self.photoimg2 = ImageTk.PhotoImage(img2)
-
-        f_lbl = Label(self.root, image=self.photoimg2)
-        f_lbl.place(x=0, y=440, width=1530, height=325)
-#=================================training ==================
+        #=================================training ==================
     def train_classifier(self):
         try:
             data_dir=("data_set")
             path=[os.path.join(data_dir,file) for file in os.listdir(data_dir)]
-
             faces=[]
             ids=[]
-
             for image in path:
                 img=Image.open(image).convert('L')
                 imageNp=np.array(img,'uint8')
@@ -66,6 +80,18 @@ class train:
             messagebox.showinfo("Result","Training datasets Completed !")
         except Exception as es:
                 messagebox.showerror("Error", f"Due To:{str(es)}", parent=self.root)
+    #========= home======================
+    def home(self):
+             self.new_window = Toplevel(self.root)
+             self.app = mainn(self.new_window)
+
+    def exite(self):
+             self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+             if self.exit >0:
+                  self.root.destroy()
+             else:
+                  return 
+
 
 
 if __name__ == "__main__":

@@ -31,33 +31,52 @@ class attendance:
         self.var_dep = StringVar()
         self.var_attendance = StringVar()
 
- # first image
-        img1 = Image.open("Images/smart-attendance.jpg")
-        img1 = img1.resize((1600, 100), Image.ANTIALIAS)
-        self.photoimg1 = ImageTk.PhotoImage(img1)
-
-        f_lbl = Label(self.root, image=self.photoimg1)
-        f_lbl.place(x=0, y=0, width=1600, height=120)
-
-        # background image
-        img4 = Image.open("Images/face-recognition-logo.jpeg")
-        img4 = img4.resize((1600, 1000), Image.ANTIALIAS)
+        img4 = Image.open("Images/home.jpg")
+        img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
         self.photoimg4 = ImageTk.PhotoImage(img4)
 
         bg_img = Label(self.root, image=self.photoimg4)
-        bg_img.place(x=0, y=120, width=1600, height=1000)
+        bg_img.place(x=0, y=0, width=swidth, height=sheight)
+    
+        Frame1 = Frame(root, relief=RIDGE, bg="#063970")
+        Frame1.place(x=0, y=0, width=swidth, height=110)
+        
+##########logo
+        i = Image.open("Images/icon.png")
+        i = i.resize((120, 120))
+        self.logo = ImageTk.PhotoImage(i)
+        f = Label(Frame1, image=self.logo)
+        f.place(x=700, y=-5, width=120, height=120 )
 
-        title_lbl = Label(bg_img, text="STUDENT MANAGEMENT SYSTEM",font=("times new roman", 20, "bold"), bg="white", fg="#063970")
-        title_lbl.place(x=0, y=0, width=1600, height=50) 
+        
+        img6 = Image.open("Images/homee.png")
+        img6 = img6.resize((130, 130), Image.ANTIALIAS)
+        self.photoimg6 = ImageTk.PhotoImage(img6)
 
-        main_frame = Frame(bg_img, bd=2)
-        main_frame.place(x=20, y=55, width=1480, height=600)
+        btn2 = Button(Frame1, image=self.photoimg6, cursor="hand2",width=90,height=90 ,command=self.home)
+        btn2.grid(row=0, column=2,padx=10,pady=5)
+
+        # Exit button
+        img12 = Image.open("Images/exit-sign-neon-style_77399-144.jpg")
+        img12 = img12.resize((90, 90), Image.ANTIALIAS)
+        self.photoimg12 = ImageTk.PhotoImage(img12)
+
+        btn88 = Button(Frame1, image=self.photoimg12, cursor="hand2" ,command=self.exite)
+        btn88.grid(row=0, column=8,padx=1300)
+
+ 
+
+        # background image
+        
+
+        main_frame = Frame(root, bd=2,bg="#063970")
+        main_frame.place(x=20, y=150, width=1500, height=600)
 
         # left label frame
         Left_frame = LabelFrame(main_frame, bd=2, relief=RIDGE, text="Student Attendance Details", font=("Calibri", 12, "bold"))
         Left_frame.place(x=10, y=10, width=730, height=580)
 
-        img_left = Image.open("Images/student.jpg")
+        img_left = Image.open("Images/studentt.jpg")
         img_left = img_left.resize((720, 130), Image.ANTIALIAS)
         self.photoimg_left = ImageTk.PhotoImage(img_left)
 
@@ -77,25 +96,25 @@ class attendance:
         studentID_entry.grid(row=0, column=1, padx=10,pady=5, sticky=W)
 
         # student's Name
-        stdName_label = Label(in_Left_frame, text="Name:", font=("Calibri", 10, "bold"), bg="white",)
+        stdName_label = Label(in_Left_frame, text="Name:", font=("Calibri", 10, "bold"), bg="white")
         stdName_label.grid(row=0, column=2, padx=20,pady=5, sticky=W)
 
         stdName_entry = ttk.Entry(in_Left_frame,textvariable=self.var_name,  width=20, font=("Calibri", 10, "bold"))
         stdName_entry.grid(row=0, column=3, padx=10,pady=5, sticky=W)
         # Department
-        dep_label = Label(in_Left_frame, text="Department :", font=("Calibri", 10, "bold"), bg="white", )
+        dep_label = Label(in_Left_frame, text="Department :", font=("Calibri", 10, "bold"), bg="white" )
         dep_label.grid(row=1, column=0, padx=20,pady=5, sticky=W)
 
-        dep_combo = ttk.Combobox(in_Left_frame, textvariable=self.var_dep, font=("Calibri", 10, "bold"), state="readonly")
+        dep_combo = ttk.Combobox(in_Left_frame, textvariable=self.var_dep, font=("Calibri", 10, "bold"), state="readonly",width=20)
         dep_combo["values"] = ("Select Department", "cs", "IT", "Electronics", "Civil")
         dep_combo.current(0)
         dep_combo.grid(row=1, column=1, pady=5, sticky=W)
 
         # Course
-        course_label = Label(in_Left_frame, text="roll :", font=("Calibri", 10, "bold"), bg="white", )
+        course_label = Label(in_Left_frame, text="Course :", font=("Calibri", 10, "bold"), bg="white", )
         course_label.grid(row=1, column=2, padx=20,pady=5, sticky=W)
 
-        course_combo = ttk.Combobox(in_Left_frame,textvariable=self.var_roll, font=("Calibri", 10, "bold"), state="readonly")
+        course_combo = ttk.Combobox(in_Left_frame,textvariable=self.var_roll, font=("Calibri", 10, "bold"), state="readonly",width=20)
         course_combo["values"] = ("Select Course", "C++", "Jave", "php", "web", "A+")
         course_combo.current(0)
         course_combo.grid(row=1, column=3, pady=5, sticky=W)
@@ -117,25 +136,25 @@ class attendance:
         Status_label = Label(in_Left_frame, text="Status :", font=("Calibri", 10, "bold"), bg="white")
         Status_label.grid(row=3, column=0, padx=20, pady=5,sticky=W)
 
-        Status_combo = ttk.Combobox(in_Left_frame, textvariable=self.var_attendance, font=("Calibri", 10, "bold"), state="readonly")
+        Status_combo = ttk.Combobox(in_Left_frame, textvariable=self.var_attendance, font=("Calibri", 10, "bold"), state="readonly",width=20)
         Status_combo["values"] = (" ", "Present","Upsent")
         Status_combo.current(0)
         Status_combo.grid(row=3, column=1,  pady=5,sticky=W)
         
         #buttons frame 
-        btnFrame = Frame(in_Left_frame, relief=RIDGE, bg="white")
+        btnFrame = Frame(in_Left_frame, relief=RIDGE, bg="#063970")
         btnFrame.place(x=0, y=200, width=715, height=35)
 
-        save_btn = Button(btnFrame, text="Import csv",command=self.importCsv, width=17, font=('arial', 13, 'bold'), bg="blue", fg="white")
+        save_btn = Button(btnFrame, text="Import csv",command=self.importCsv, width=17, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         save_btn.grid(row=0, column=0)
 
-        update_btn = Button(btnFrame, text="Export csv",command=self.exportcsv, width=17, font=('arial', 13, 'bold'), bg="blue", fg="white")
+        update_btn = Button(btnFrame, text="Export csv",command=self.exportcsv, width=17, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         update_btn.grid(row=0, column=1)
 
-        delete_btn = Button(btnFrame, text="Update", width=17, font=('arial', 13, 'bold'), bg="blue", fg="white")
+        delete_btn = Button(btnFrame, text="Update", width=17, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         delete_btn.grid(row=0, column=2)
 
-        reset_btn = Button(btnFrame, text="Reset", command=self.reset_data, width=17, font=('arial', 13, 'bold'), bg="blue", fg="white")
+        reset_btn = Button(btnFrame, text="Reset", command=self.reset_data, width=17, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         reset_btn.grid(row=0, column=3)
 
 
@@ -150,8 +169,8 @@ class attendance:
         scroll_y = ttk.Scrollbar(table_Frame, orient=VERTICAL)
 
         self.AttendaceReport_table = ttk.Treeview(table_Frame,
-         column=("id", "name", "roll" , "Dep","Time","Date", "Attendance"),
-         xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        column=("id", "name", "Course" , "Dep","Time","Date", "Attendance"),
+        xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
 
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
@@ -160,7 +179,7 @@ class attendance:
 
         self.AttendaceReport_table.heading("id", text="StudentID")
         self.AttendaceReport_table.heading("name", text="Name")
-        self.AttendaceReport_table.heading("roll", text="roll")
+        self.AttendaceReport_table.heading("Course", text="Course")
         self.AttendaceReport_table.heading("Dep", text="Dep")
         self.AttendaceReport_table.heading("Time", text="Time")
         self.AttendaceReport_table.heading("Date", text="Date")
@@ -169,7 +188,7 @@ class attendance:
 
         self.AttendaceReport_table.column("id", width=80)
         self.AttendaceReport_table.column("name", width=100)
-        self.AttendaceReport_table.column("roll", width=100)
+        self.AttendaceReport_table.column("Course", width=100)
         self.AttendaceReport_table.column("Dep", width=100)
         self.AttendaceReport_table.column("Time", width=80)
         self.AttendaceReport_table.column("Date", width=100)
@@ -235,7 +254,17 @@ class attendance:
 
 
 
-        
+     #========= home======================
+    def home(self):
+             self.new_window = Toplevel(self.root)
+             self.app = mainn(self.new_window)
+
+    def exite(self):
+             self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
+             if self.exit >0:
+                  self.root.destroy()
+             else:
+                  return 
 
 
 

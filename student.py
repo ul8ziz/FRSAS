@@ -47,8 +47,16 @@ class Student:
         img4 = img4.resize((1600, 1000), Image.ANTIALIAS)
         self.photoimg4 = ImageTk.PhotoImage(img4)       
 
-        Frame1 = Frame(root, relief=RIDGE, bg="DodgerBlue4")
+        Frame1 = Frame(root, relief=RIDGE, bg="#063970")
         Frame1.place(x=0, y=0, width=swidth, height=230)
+        
+##########logo
+        i = Image.open("Images/icon.png")
+        i = i.resize((120, 120))
+        self.logo = ImageTk.PhotoImage(i)
+        f = Label(Frame1, image=self.logo)
+        f.place(x=700, y=-5, width=120, height=120 )
+
         
         img6 = Image.open("Images/homee.ico")
         img6 = img6.resize((130, 130), Image.ANTIALIAS)
@@ -68,7 +76,7 @@ class Student:
 #############
         bg_img = Label(self.root, image=self.photoimg4)
         bg_img.place(x=0, y=110, width=swidth, height=sheight)
-        title_lbl = Label(bg_img, text="STUDENT  INFORMATION  MANAGEMENT ",font=("times new roman", 20, "bold"), bg="white", fg="black")
+        title_lbl = Label(bg_img, text="STUDENT  INFORMATION  MANAGEMENT ",font=("times new roman", 20, "bold"), bg="white", fg="#063970")
         title_lbl.place(x=0, y=12, width=1600, height=40) 
 
         main_frame = Frame(bg_img, bd=2)
@@ -101,21 +109,21 @@ class Student:
         student_frame.place(x=5, y=150, width=720, height=450)
 
         # studentID
-        studentID_label = Label(student_frame, text="StudentID:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        studentID_label = Label(student_frame, text="StudentID:", font=("Calibri", 10, "bold"), bg="white")
         studentID_label.grid(row=0, column=0, padx=10, sticky=W)
 
         studentID_entry = ttk.Entry(student_frame, textvariable=self.var_std_id, width=30, font=("Calibri", 10, "bold"))
         studentID_entry.grid(row=0, column=1, padx=10,pady=10, sticky=W)
 
         # student's Name
-        stdName_label = Label(student_frame, text="Name:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        stdName_label = Label(student_frame, text="Name:", font=("Calibri", 10, "bold"), bg="white",)
         stdName_label.grid(row=1, column=0, padx=10, sticky=W,)
 
         stdName_entry = ttk.Entry(student_frame, textvariable=self.var_std_name, width=30, font=("Calibri", 10, "bold"))
         stdName_entry.grid(row=1, column=1, padx=10, sticky=W)
 
         # Department
-        dep_label = Label(student_frame, text="Department :", font=("Calibri", 10, "bold"), bg="white", fg="blue")
+        dep_label = Label(student_frame, text="Department :", font=("Calibri", 10, "bold"), bg="white")
         dep_label.grid(row=2, column=0, padx=10, sticky=W)
 
         conn = mysql.connector.connect(host="localhost",username="root",password="", database="fras_db"    )
@@ -129,7 +137,7 @@ class Student:
         dep_combo.grid(row=2, column=1, padx=10,pady=10, sticky=W)
 
         # Year
-        year_label = Label(student_frame, text="Year :", font=("Calibri", 10, "bold"), bg="white", fg="blue")
+        year_label = Label(student_frame, text="Year :", font=("Calibri", 10, "bold"), bg="white", )
         year_label.grid(row=3, column=0, padx=10, sticky=W)
 
         year_combo = ttk.Combobox(student_frame, textvariable=self.var_year, font=("Calibri", 10, "bold"), )
@@ -137,7 +145,7 @@ class Student:
         year_combo.current(0)
         year_combo.grid(row=3, column=1, padx=10, sticky=W)
         #gender
-        gender_label = Label(student_frame, text="Gender:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        gender_label = Label(student_frame, text="Gender:", font=("Calibri", 10, "bold"), bg="white",)
         gender_label.grid(row=4, column=0, padx=10, sticky=W)
 
         gender_combo = ttk.Combobox(student_frame, textvariable=self.var_gender, font=("Calibri", 10, "bold"), state="readonly")
@@ -153,21 +161,21 @@ class Student:
         # DOB_entry.grid(row=2, column=3, padx=10, sticky=W)
 
         #Email
-        Email_label = Label(student_frame, text="Email:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        Email_label = Label(student_frame, text="Email:", font=("Calibri", 10, "bold"), bg="white")
         Email_label.grid(row=5, column=0, padx=10, sticky=W)
 
         Email_entry = ttk.Entry(student_frame, textvariable=self.var_email, width=20, font=("Calibri", 10, "bold"))
         Email_entry.grid(row=5, column=1, padx=10,pady=10, sticky=W)
 
         # student's Contact Info
-        phone_label = Label(student_frame, text="Contact No.:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        phone_label = Label(student_frame, text="Contact No.:", font=("Calibri", 10, "bold"), bg="white")
         phone_label.grid(row=6, column=0, padx=10, sticky=W)
 
         phone_entry = ttk.Entry(student_frame, textvariable=self.var_phone, width=30, font=("Calibri", 10, "bold"))
         phone_entry.grid(row=6, column=1, padx=10, sticky=W)
 
         # student's Address
-        address_label = Label(student_frame, text="Address:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
+        address_label = Label(student_frame, text="Address:", font=("Calibri", 10, "bold"), bg="white",)
         address_label.grid(row=7, column=0, padx=10, sticky=W)
 
         address_entry = ttk.Entry(student_frame, textvariable=self.var_address, width=30, font=("Calibri", 10, "bold"))
@@ -198,22 +206,22 @@ class Student:
         btnFrame = Frame(student_frame, relief=RIDGE, bg="white")
         btnFrame.place(x=5, y=300, width=710, height=35)
 
-        save_btn = Button(btnFrame, text="Save", command=self.add_data, width=17, font=('arial', 13, 'bold'), bg="red", fg="white")
+        save_btn = Button(btnFrame, text="Save", command=self.add_data, width=17, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         save_btn.grid(row=0, column=0)
 
-        update_btn = Button(btnFrame, text="Update",command=self.update_data, width=16, font=('arial', 13, 'bold'), bg="red", fg="white")
+        update_btn = Button(btnFrame, text="Update",command=self.update_data, width=16, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         update_btn.grid(row=0, column=1)
 
-        delete_btn = Button(btnFrame, text="Delete",command=self.delete_data, width=16, font=('arial', 13, 'bold'), bg="red", fg="white")
+        delete_btn = Button(btnFrame, text="Delete",command=self.delete_data, width=16, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         delete_btn.grid(row=0, column=2)
 
-        reset_btn = Button(btnFrame, text="Reset",command=self.reset_data, width=17, font=('arial', 13, 'bold'), bg="red", fg="white")
+        reset_btn = Button(btnFrame, text="Reset",command=self.reset_data, width=17, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         reset_btn.grid(row=0, column=3)
 
         btnFrame1 = Frame(student_frame, relief=RIDGE, bg="white")
         btnFrame1.place(x=5, y=340, width=710, height=35)
 
-        capture_photo_btn = Button(btnFrame1, text="Capture Photo Sample",command=self.generate_dataset, width=69, font=('arial', 13, 'bold'), bg="red", fg="white")
+        capture_photo_btn = Button(btnFrame1, text="Capture Photo Sample",command=self.generate_dataset, width=69, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         capture_photo_btn.grid(row=0, column=0)
 
         
@@ -222,7 +230,7 @@ class Student:
         search_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE, text="Search System",font=("Calibri", 12, "bold"), fg="green")
         search_frame.place(x=5, y=60, width=720, height=60)
         
-        search_label = Label(search_frame, text=" Search By: ", font=("Calibri", 10, "bold"), bg="blue",fg="white")
+        search_label = Label(search_frame, text=" Search By: ", font=("Calibri", 10, "bold"), bg="#063970",fg="white")
         search_label.grid(row=0, column=0, padx=10,pady=5, sticky=W)
 
         search_combo = ttk.Combobox(search_frame, font=("Calibri", 10, "bold"), state="readonly", width=12)
@@ -233,10 +241,10 @@ class Student:
         search_entry = ttk.Entry(search_frame, width=20, font=("Calibri", 10, "bold"))
         search_entry.grid(row=0, column=2, padx=4,pady=5, sticky=W)
 
-        search_btn = Button(search_frame, text="Search", width=10, font=('arial', 10, 'bold'), bg="red", fg="white")
+        search_btn = Button(search_frame, text="Search", width=10, font=('arial', 10, 'bold'), bg="#063970", fg="white")
         search_btn.grid(row=0, column=3, padx=4)
 
-        showAll_btn = Button(search_frame, text="Show All",command=self.fetch_data, width=10, font=('arial', 10, 'bold'), bg="red", fg="white")
+        showAll_btn = Button(search_frame, text="Show All",command=self.fetch_data, width=10, font=('arial', 10, 'bold'), bg="#063970", fg="white")
         showAll_btn.grid(row=0, column=4, padx=4 ,pady=4)
 
         # ==================================Table Frame==========================================

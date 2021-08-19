@@ -14,7 +14,6 @@ from time import strftime
 from datetime import datetime
 from main import *
 
-
 class face_recognition:
     def __init__(self, root):
         self.root = root
@@ -22,9 +21,13 @@ class face_recognition:
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Face Recognition System")
-
-        title_lbl = Label(self.root, text="FACE RECOGNITION ATTENDANCE SYSTEM SOFTWARE",font=("arial", 30, "bold"), bg="white", fg="#063970")
-        title_lbl.place(x=0, y=3, width=1530, height=45) 
+        self.root.iconbitmap("images/icon.ico")
+        
+       
+        # statusbar = root.Label(root, text="on the way…", bd=1, relief=root.SUNKEN, anchor=root.W)
+        # statusbar.pack(side=root.BOTTOM, fill=root.X)   
+       
+        
 
     #  image
         img1 = Image.open("Images/face-recog-1024x678.jpg")
@@ -46,14 +49,24 @@ class face_recognition:
         self.var_semester = StringVar()
         self.var_course = StringVar()
         self.var_level = StringVar()
+        self.var_lectursr = StringVar()
+        
         
         Frame1 = Frame(root, relief=RIDGE, bg="#063970")
         Frame1.place(x=0, y=0, width=swidth, height=110)
+##########logo
+        i = Image.open("Images/icon.png")
+        i = i.resize((120, 120))
+        self.logo = ImageTk.PhotoImage(i)
+        f = Label(Frame1, image=self.logo)
+        f.place(x=700, y=-5, width=120, height=120 )
+
         
         img6 = Image.open("Images/homee.ico")
         img6 = img6.resize((130, 130), Image.ANTIALIAS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 
+        
         btn2 = Button(Frame1, image=self.photoimg6, cursor="hand2",width=90,height=90 ,command=self.home)
         btn2.grid(row=0, column=2,padx=10,pady=5)
 
@@ -66,39 +79,61 @@ class face_recognition:
         btn88.grid(row=0, column=8,padx=1300)
         
         frame = Frame(self.root, bd=2, bg="#063970", relief=RIDGE)
-        frame.place(x=200, y=400, width=800, height=50)
+        frame.place(x=0, y=400, width=1000, height=50)
+
+        # Department
+        dep_label = Label(frame, text="Department :", font=("Calibri", 10, "bold"), bg="#063970",fg="white")
+        dep_label.grid(row=0, column=1, padx=10, sticky=W)
+
+        conn = mysql.connector.connect(host="localhost",username="root",password="", database="fras_db"    )
+        my_cursor = conn.cursor()
+        my_cursor.execute("select Department_name from department")
+        depcom=my_cursor.fetchall()
         
+        dep_combo = ttk.Combobox(frame, textvariable=self.var_depp, font=("Calibri", 10, "bold"), width=11, state="readonly")
+        dep_combo["values"] = (depcom)
+        dep_combo.current(0)
+        dep_combo.grid(row=0, column=2, padx=0,pady=0, sticky=W)
+
         # Level
         sem_label = Label(frame, text="Level:", font=("Calibri", 10, "bold"), bg="#063970", fg="white")
-        sem_label.grid(row=0, column=0, padx=40, sticky=W)
+        sem_label.grid(row=0, column=3, padx=20, sticky=W)
 
-        sem_combo = ttk.Combobox(frame, textvariable=self.var_level, font=("Calibri", 10, "bold"), state="readonly")
-        sem_combo["values"] = ("Select Level", "1", "2", "3", "4")
+        sem_combo = ttk.Combobox(frame, textvariable=self.var_level, font=("Calibri", 10, "bold"),width=11, state="readonly")
+        sem_combo["values"] = ("Select ", "1", "2", "3", "4")
         sem_combo.current(0)
-        sem_combo.grid(row=0, column=1, padx=2, pady=10, sticky=W)
+        sem_combo.grid(row=0, column=4, padx=0, pady=0, sticky=W)
 
         # Semester
         sem_label = Label(frame, text="Semester:", font=("Calibri", 10, "bold"), bg="#063970", fg="white")
-        sem_label.grid(row=0, column=3, padx=10, sticky=W)
+        sem_label.grid(row=0, column=5, padx=10, sticky=W)
 
-        sem_combo = ttk.Combobox(frame, textvariable=self.var_semester, font=("Calibri", 10, "bold"), state="readonly")
-        sem_combo["values"] = ("Select Semester", "1", "2")
+        sem_combo = ttk.Combobox(frame, textvariable=self.var_semester, font=("Calibri", 10, "bold"),width=11, state="readonly")
+        sem_combo["values"] = ("Select", "1", "2")
         sem_combo.current(0)
-        sem_combo.grid(row=0, column=4, padx=2, pady=10, sticky=W)
+        sem_combo.grid(row=0, column=6, padx=0, pady=10, sticky=W)
 
         # Course
         course_label = Label(frame, text="Course :", font=("Calibri", 10, "bold"), bg="#063970", fg="white")
-        course_label.grid(row=0, column=5, padx=10, sticky=W)
+        course_label.grid(row=0, column=7, padx=10, sticky=W)
 
         conn = mysql.connector.connect(host="localhost",username="root",password="", database="fras_db"    )
         my_cursor = conn.cursor()
         my_cursor.execute("select course_name from courses")
         course_com=my_cursor.fetchall()
         
-        course_combo = ttk.Combobox(frame, textvariable=self.var_course, font=("Calibri", 10, "bold"), state="readonly")
+        course_combo = ttk.Combobox(frame, textvariable=self.var_course, font=("Calibri", 10, "bold"),width=11, state="readonly")
         course_combo["values"] = (course_com)
         course_combo.current(0)
-        course_combo.grid(row=0, column=6, pady=0, sticky=W)
+        course_combo.grid(row=0, column=8, pady=0, sticky=W)
+        # number of lecturer
+        course_label = Label(frame, text="Number of lecturer :", font=("Calibri", 10, "bold"), bg="#063970", fg="white")
+        course_label.grid(row=0, column=9, padx=10, sticky=W)
+        
+        course_combo = ttk.Combobox(frame, textvariable=self.var_lectursr, font=("Calibri", 10, "bold"),width=11,)
+        course_combo["values"] = ("Select","1", "2","3", "4","5", "6","7", "8","9", "10","11", "12")
+        course_combo.current(0)
+        course_combo.grid(row=0, column=10, pady=0, sticky=W)
 
 
        #button
@@ -107,21 +142,27 @@ class face_recognition:
         
     #===============attendance =============================
     def mark_attendance(self,i,n,d):
-        with open("Attendance.csv","r+",newline="\n") as f:
-            myDataList=f.readlines()
-            name_list=[]
-            for line in myDataList:
-                entry=line.split((","))
-                name_list.append(entry[0])
-            if((i not in name_list)  and (n not in name_list) and (d not in name_list)):
-                now=datetime.now()
+        try:  
+            with open("IT_Attendance.csv","r+",newline="\n") as f:
+                myDataList=f.readlines()
+                name_list=[]
                 co=self.var_course.get()
                 le=self.var_level.get()
                 se= self.var_semester.get()
-                d1=now.strftime("%d/%m/:%Y")
-                dtString=now.strftime("%H:%M:%S")
-                f.writelines(f"\nThe Atnndans of ,{d}")
-                f.writelines(f"\n{i},{n},{d},{le},{se},{co},{dtString},{d1},Preset")
+               # f.writelines(f"\nThe Atnndans of ,{d},{co}")
+                for line in myDataList:
+                    entry=line.split((","))
+                    name_list.append(entry[0])
+                    
+                if((i not in name_list)  and (n not in name_list) and (d not in name_list)):
+                    now=datetime.now()
+                    
+                    d1=now.strftime("%d/%m/:%Y")
+                    dtString=now.strftime("%H:%M:%S")
+                   
+                    f.writelines(f"\n{i},{n},{d},{dtString},{d1},{le},{se},{co},Preset")
+        except Exception as es:
+                messagebox.showerror("Error", f"because of :{str(es)}", parent=self.root)
     #===================Face Recongnition ============
     def face_recog(self):
         try:
