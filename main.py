@@ -5,11 +5,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
-from student import *
-from train import train
-from dashboard import dashboard
-from face_recognition import face_recognition
-from attendance import attendance
+from Admin_main import *
 import os
 
 class mainn:
@@ -20,7 +16,8 @@ class mainn:
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Face Recognition Student Attendance System")
-       
+        self.root.iconbitmap('Images/icon.ico')
+
         # background image
         img4 = Image.open("Images/home.jpg")
         img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
@@ -57,7 +54,7 @@ class mainn:
         btn1_1.bind('<Leave>', on_leave)
 
         # Face Detection button
-        img6 = Image.open("Images/faceDetector.jpeg")
+        img6 = Image.open("Images/faceDetector.jpg")
         img6 = img6.resize((195, 195), Image.ANTIALIAS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 
@@ -77,7 +74,7 @@ class mainn:
 
 
         # attendance button
-        img7 = Image.open("Images/face.jpg")
+        img7 = Image.open("Images/face.png")
         img7 = img7.resize((150, 150), Image.ANTIALIAS)
         self.photoimg7 = ImageTk.PhotoImage(img7)
 
@@ -200,14 +197,13 @@ class mainn:
     def dashboard(self):
        messagebox.showerror("Error","You are not admin")
 
-
     def face_recognition(self):
-            self.new_window = Toplevel(self.root)
-            self.app = face_recognition(self.new_window)
-
-    def attendance(self):
+        self.root.withdraw()
         self.new_window = Toplevel(self.root)
-        self.app = attendance(self.new_window)   
+        x = face_recognition(self.new_window) 
+        
+    def attendance(self):
+        messagebox.showerror("Error","You are not admin")
 
     def train(self):
        messagebox.showerror("Error","You are not admin")

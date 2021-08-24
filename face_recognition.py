@@ -8,11 +8,12 @@ from tkinter import messagebox
 import os
 import numpy as np
 import cv2
-from mysql.connector import cursor
 import mysql.connector
+from mysql.connector import cursor
 from time import strftime
 from datetime import datetime
-from main import *
+from Admin_main import *
+
 
 class face_recognition:
     def __init__(self, root):
@@ -54,6 +55,7 @@ class face_recognition:
         
         Frame1 = Frame(root, relief=RIDGE, bg="#063970")
         Frame1.place(x=0, y=0, width=swidth, height=110)
+        
 ##########logo
         i = Image.open("Images/icon.png")
         i = i.resize((120, 120))
@@ -139,11 +141,15 @@ class face_recognition:
        #button
         Butt = Button(f_lbl, text="Tak Attendance ",command=self.face_recog, cursor="hand2", font=("times new roman",18, "bold"),bg="#063970", fg="white")
         Butt.place(x=390, y=300, width=200, height=40)
+
+         #report
+        Butt1 = Button(f_lbl, text="Go to Report  ",command=self.report, cursor="hand2", font=("times new roman",18, "bold"),bg="#063970", fg="white")
+        Butt1.place(x=390, y=400, width=200, height=40)
         
     #===============attendance =============================
     def mark_attendance(self,i,n,d):
         try:  
-            with open("IT_Attendance.csv","r+",newline="\n") as f:
+            with open("Attendance.csv","r+",newline="\n") as f:
                 myDataList=f.readlines()
                 name_list=[]
                 co=self.var_course.get()
@@ -159,13 +165,13 @@ class face_recognition:
                     
                     d1=now.strftime("%d/%m/:%Y")
                     dtString=now.strftime("%H:%M:%S")
-                   
                     f.writelines(f"\n{i},{n},{d},{dtString},{d1},{le},{se},{co},Preset")
         except Exception as es:
                 messagebox.showerror("Error", f"because of :{str(es)}", parent=self.root)
     #===================Face Recongnition ============
     def face_recog(self):
         try:
+            
             def draw_boundray(img,classifier,scaleFactor,minNeighbors,color,text,clf):
                 gray_image=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
                 features=classifier.detectMultiScale(gray_image,scaleFactor,minNeighbors)
@@ -222,15 +228,21 @@ class face_recognition:
                 messagebox.showerror("Error", f"because of :{str(es)}", parent=self.root)   
      #========= home======================
     def home(self):
-             self.new_window = Toplevel(self.root)
-             self.app = mainn(self.new_window)
-
+        self.root.withdraw()
+        self.new_window = Toplevel(self.root)
+        s = Admin_main(self.new_window)
+        
     def exite(self):
              self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
              if self.exit >0:
                   self.root.destroy()
              else:
                   return 
+
+    def report(self):
+            self.root.withdraw()
+            self.new_window = Toplevel(self.root)
+            d = attendance(self.new_window)
 
 if __name__ == "__main__":
     root = Tk()

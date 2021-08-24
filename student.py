@@ -9,8 +9,9 @@ from tkinter import messagebox
 import mysql.connector
 from mysql.connector import cursor
 import cv2
-from styling import styling
-from main import *
+from Admin_main import *
+
+
 
 
 class Student:
@@ -19,28 +20,24 @@ class Student:
         swidth= root.winfo_screenwidth() 
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
-        self.root.title("FRAS")
+        self.root.title("STUDENT  INFORMATION  MANAGEMENT System")
+        self.root.iconbitmap('Images/icon.ico')
+
         # ==================================variables ========================================
         self.var_dep = StringVar()
         self.var_year = StringVar()
         self.var_std_id = StringVar()
         self.var_std_name = StringVar()
         # self.var_div=StringVar()
-        # self.var_roll = StringVar()
+        self.var_search = StringVar()
         self.var_gender = StringVar()
         #self.var_dob= StringVar()
         self.var_email= StringVar()
         self.var_phone = StringVar()
         self.var_address = StringVar()
-        #self.var_teacher= StringVar()
+        self.var_search_comboo= StringVar()
 
-        # first image
-        img1 = Image.open("Images/smart-attendance.jpg")
-        img1 = img1.resize((1600, 100), Image.ANTIALIAS)
-        self.photoimg1 = ImageTk.PhotoImage(img1)
-
-        f_lbl = Label(self.root, image=self.photoimg1)
-        f_lbl.place(x=0, y=0, width=1600, height=120)
+        
 
         # background image
         img4 = Image.open("Images/Home.jpg")
@@ -76,7 +73,7 @@ class Student:
 #############
         bg_img = Label(self.root, image=self.photoimg4)
         bg_img.place(x=0, y=110, width=swidth, height=sheight)
-        title_lbl = Label(bg_img, text="STUDENT  INFORMATION  MANAGEMENT ",font=("times new roman", 20, "bold"), bg="white", fg="#063970")
+        title_lbl = Label(bg_img, text="STUDENT  INFORMATION  MANAGEMENT SYSTEM ",font=("times new roman", 20, "bold"), bg="white", fg="#063970")
         title_lbl.place(x=0, y=12, width=1600, height=40) 
 
         main_frame = Frame(bg_img, bd=2)
@@ -98,11 +95,11 @@ class Student:
         Right_frame.place(x=740, y=10, width=750, height=600)
 
         img_right = Image.open("Images/grad2.jpg")
-        img_right = img_right.resize((720, 120), Image.ANTIALIAS)
+        img_right = img_right.resize((730, 130), Image.ANTIALIAS)
         self.photoimg_right = ImageTk.PhotoImage(img_right)
 
         f_lbl = Label(Right_frame, image=self.photoimg_right)
-        f_lbl.place(x=5, y=0, width=720, height=120)
+        f_lbl.place(x=5, y=0, width=730, height=130)
 
         #Student's  Information
         student_frame = LabelFrame(main_frame, bd=2, bg="white", relief=RIDGE, text="Student's  Information",font=("Calibri", 12, "bold"), fg="green")
@@ -153,13 +150,6 @@ class Student:
         gender_combo.current(0)
         gender_combo.grid(row=4, column=1,  pady=10,padx=10, sticky=W)
 
-        # # DOB
-        # DOB_label = Label(student_frame, text="DOB:", font=("Calibri", 10, "bold"), bg="white", fg="blue")
-        # DOB_label.grid(row=2, column=2, padx=10, sticky=W)
-
-        # DOB_entry = ttk.Entry(student_frame, textvariable=self.var_dob, width=20, font=("Calibri", 10, "bold"))
-        # DOB_entry.grid(row=2, column=3, padx=10, sticky=W)
-
         #Email
         Email_label = Label(student_frame, text="Email:", font=("Calibri", 10, "bold"), bg="white")
         Email_label.grid(row=5, column=0, padx=10, sticky=W)
@@ -180,20 +170,6 @@ class Student:
 
         address_entry = ttk.Entry(student_frame, textvariable=self.var_address, width=30, font=("Calibri", 10, "bold"))
         address_entry.grid(row=7, column=1,pady=5, padx=10, sticky=W)
-
-        #Teacher name
-        # Teacher_label = Label(student_frame, text="Teacher Name:", font=("Calibri", 10, "bold"), bg="white",fg="blue")
-        # Teacher_label.grid(row=4, column=2, padx=10, sticky=W)
-
-        # conn = mysql.connector.connect(host="localhost",username="root",password="", database="fras_db"    )
-        # my_cursor = conn.cursor()
-        # my_cursor.execute("select teacher_name from Tracher")
-        # Teacher_com=my_cursor.fetchall()
-
-        # Teacher_combo = ttk.Combobox(student_frame, textvariable=self.var_teacher, font=("Calibri", 10, "bold"), state="readonly")
-        # Teacher_combo["values"] = (Teacher_com)
-        # Teacher_combo.current(0)
-        # Teacher_combo.grid(row=4, column=3, pady=0, sticky=W)
         # ==================================Radio Buttons========================================
         self.var_radio1 = StringVar()
         radiobtn1 = ttk.Radiobutton(student_frame, variable=self.var_radio1, text="Capture Photo Sample", value="Yes")
@@ -224,24 +200,22 @@ class Student:
         capture_photo_btn = Button(btnFrame1, text="Capture Photo Sample",command=self.generate_dataset, width=69, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         capture_photo_btn.grid(row=0, column=0)
 
-        
-
         # ==================================Search Systems========================================
         search_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE, text="Search System",font=("Calibri", 12, "bold"), fg="green")
-        search_frame.place(x=5, y=60, width=720, height=60)
+        search_frame.place(x=5, y=60, width=730, height=60)
         
         search_label = Label(search_frame, text=" Search By: ", font=("Calibri", 10, "bold"), bg="#063970",fg="white")
-        search_label.grid(row=0, column=0, padx=10,pady=5, sticky=W)
+        search_label.grid(row=0, column=0, padx=20,pady=5, sticky=W)
 
-        search_combo = ttk.Combobox(search_frame, font=("Calibri", 10, "bold"), state="readonly", width=12)
-        search_combo["values"] = ("Select", "Department", "Year", "Student Name")
+        search_combo = ttk.Combobox(search_frame, font=("Calibri", 10, "bold"),textvariable=self.var_search_comboo, state="readonly", width=10)
+        search_combo["values"] = ("Select", "Dep", "Year", "Name","phone")
         search_combo.current(0)
         search_combo.grid(row=0, column=1, padx=2, pady=10, sticky=W)
 
-        search_entry = ttk.Entry(search_frame, width=20, font=("Calibri", 10, "bold"))
+        search_entry = ttk.Entry(search_frame, width=40,textvariable=self.var_search, font=("Calibri", 10, "bold") )
         search_entry.grid(row=0, column=2, padx=4,pady=5, sticky=W)
 
-        search_btn = Button(search_frame, text="Search", width=10, font=('arial', 10, 'bold'), bg="#063970", fg="white")
+        search_btn = Button(search_frame, text="Search", width=10,command=self.search ,font=('arial', 10, 'bold'), bg="#063970", fg="white")
         search_btn.grid(row=0, column=3, padx=4)
 
         showAll_btn = Button(search_frame, text="Show All",command=self.fetch_data, width=10, font=('arial', 10, 'bold'), bg="#063970", fg="white")
@@ -254,8 +228,7 @@ class Student:
         scroll_x = ttk.Scrollbar(table_frame, orient=HORIZONTAL)
         scroll_y = ttk.Scrollbar(table_frame, orient=VERTICAL)
 
-        self.student_table = ttk.Treeview(table_frame, column=("id", "dep", "year","name",  "gender","phone","address","email","photo"),
-                                          xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
+        self.student_table = ttk.Treeview(table_frame, column=("id", "dep", "year","name",  "gender","phone","address","email","photo"),xscrollcommand=scroll_x.set, yscrollcommand=scroll_y.set)
 
         scroll_x.pack(side=BOTTOM, fill=X)
         scroll_y.pack(side=RIGHT, fill=Y)
@@ -287,7 +260,65 @@ class Student:
         self.student_table.bind("<ButtonRelease>",self.get_cursor)
         self.fetch_data()
     # ==================================Functions Declaration========================================
-    # =================Add Date========
+    #######==============search by
+    def search(self):
+        if self.var_search_comboo.get() == "Select":
+                messagebox.showerror("Error", "You Have to selet an item", parent=self.root)
+        elif self.var_search_comboo.get() == "Dep":
+            
+                conn = mysql.connector.connect(host="localhost",username="root",password="",database="FRAS_DB")                                              
+                my_cursor = conn.cursor()
+                sql=("SELECT * FROM `students` WHERE `Dep`=%s")
+                val=(self.var_search.get(),)
+                my_cursor.execute(sql,val)
+                self.rew=my_cursor.fetchall()
+                if len(self.rew)!=0:
+                      self.student_table.delete(*self.student_table.get_children())
+                      for i in self.rew:
+                          self.student_table.insert("",END,values=i)
+                      conn.commit()
+                conn.close()
+        elif self.var_search_comboo.get() == "Year":
+            conn = mysql.connector.connect(host="localhost",username="root",password="",database="FRAS_DB")                                              
+            my_cursor = conn.cursor()
+            sql=("SELECT * FROM `students` WHERE `Year`=%s")
+            val=(self.var_search.get(),)
+            my_cursor.execute(sql,val)
+            self.rew=my_cursor.fetchall()
+            if len(self.rew)!=0:
+                    self.student_table.delete(*self.student_table.get_children())
+                    for i in self.rew:
+                        self.student_table.insert("",END,values=i)
+                    conn.commit()
+            conn.close()
+        elif self.var_search_comboo.get() == "Name":
+            conn = mysql.connector.connect(host="localhost",username="root",password="",database="FRAS_DB")                                              
+            my_cursor = conn.cursor()
+            sql=("SELECT * FROM `students` WHERE `Name`=%s")
+            val=(self.var_search.get(),)
+            my_cursor.execute(sql,val)
+            self.rew=my_cursor.fetchall()
+            if len(self.rew)!=0:
+                    self.student_table.delete(*self.student_table.get_children())
+                    for i in self.rew:
+                        self.student_table.insert("",END,values=i)
+                    conn.commit()
+            conn.close()
+        elif self.var_search_comboo.get() == "phone":
+            conn = mysql.connector.connect(host="localhost",username="root",password="",database="FRAS_DB")                                              
+            my_cursor = conn.cursor()
+            sql=("SELECT * FROM `students` WHERE `phone`=%s")
+            val=(self.var_search.get(),)
+            my_cursor.execute(sql,val)
+            self.rew=my_cursor.fetchall()
+            if len(self.rew)!=0:
+                    self.student_table.delete(*self.student_table.get_children())
+                    for i in self.rew:
+                        self.student_table.insert("",END,values=i)
+                    conn.commit()
+            conn.close()
+
+    # =================Add student========
     def add_data(self):
         if self.var_dep.get() == "Select Department" or self.var_std_name.get() == "" or self.var_gender.get() == "":
             messagebox.showerror("Error", "All Fields are mandatory", parent=self.root)
@@ -316,13 +347,9 @@ class Student:
 
     #== =======================fetch data  =======
     def fetch_data(self):
-        conn = mysql.connector.connect(host="localhost",
-                                               username="root",
-                                               password="",
-                                               database="fras_db"
-                                        )
+        conn = mysql.connector.connect(host="localhost",    username="root",        password="",  database="fras_db"   )
         my_cursor = conn.cursor()
-        my_cursor.execute("select * from students")
+        my_cursor.execute("select * from students ORDER BY `students`.`Student_id` ASC")
         data=my_cursor.fetchall()
         if len(data)!=0:
             self.student_table.delete(*self.student_table.get_children())
@@ -356,9 +383,7 @@ class Student:
                     conn = mysql.connector.connect(host="localhost",username="root",password="",database="FRAS_DB")                                                                                                                                    
                     my_cursor = conn.cursor()
                     my_cursor.execute("update  students set Dep=%s,Year=%s,name=%s,Gender=%s,Email=%s,phone=%s,Address=%s,PhotoSample=%s  where student_id=%s ", 
-                    (
-                                      
-                                      
+                    (                                      
                                       self.var_dep.get(),
                                       self.var_year.get(),
                                       self.var_std_name.get(),
@@ -403,7 +428,7 @@ class Student:
                 conn.close()
                 messagebox.showinfo("Delet","Student   Delete completed.",parent=self.root)
             except Exception as es:
-               messagebox.showerror("Error",f"Due To :{str(es)}",parent=self.root)
+               messagebox.showerror("Error",f"here :{str(es)}",parent=self.root)
                 
     #==============Reset ============================   
     def reset_data(self):
@@ -448,7 +473,6 @@ class Student:
 
                     #=========load predifiend data on face frontals from opencv=======
                     face_classifier=cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-
                     def face_cropped(img):
                         gray=cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
                         faces=face_classifier.detectMultiScale(gray,1.3,5)
@@ -470,7 +494,7 @@ class Student:
                             cv2.putText(face,str(img_id),(50,50),cv2.FONT_HERSHEY_COMPLEX,2,(0,255,0),2)
                             cv2.imshow("Crooped Face",face)
 
-                        if cv2.waitKey(1)==13 or int(img_id)==50:
+                        if cv2.waitKey(1)==20 or int(img_id)==100:
                             break
                     cap.release()
                     cv2.destroyAllWindows()
@@ -480,9 +504,10 @@ class Student:
                
     #========= home======================
     def home(self):
-             self.new_window = Toplevel(self.root)
-             self.app = mainn(self.new_window)
-
+        self.root.withdraw()
+        self.new_window = Toplevel(self.root)
+        b = Admin_main(self.new_window)  
+        
     def exite(self):
              self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
              if self.exit >0:

@@ -6,7 +6,7 @@ from tkinter import ttk
 from PIL import Image, ImageTk  
 from tkinter import messagebox
 import mysql.connector
-from main import *
+from Admin_main import *
 
 
 class Register:
@@ -17,6 +17,8 @@ class Register:
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.background="DodgerBlue4"
+        self.root.iconbitmap('Images/icon.ico')
+
         # ***************variabletr
         self.var_id = StringVar()
         self.var_fname = StringVar()
@@ -166,9 +168,10 @@ class Register:
             conn.close()
     #========= home======================
     def home(self):
-             self.new_window = Toplevel(self.root)
-             self.app = mainn(self.new_window)
-
+        self.root.withdraw()
+        self.new_window = Toplevel(self.root)
+        bb = Admin_main(self.new_window)  
+        
     def exite(self):
              self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)
              if self.exit >0:

@@ -9,7 +9,9 @@ import mysql.connector
 import os
 import numpy as np
 import cv2
-from main import *
+
+
+
 
 
 class train:
@@ -22,6 +24,7 @@ class train:
         img4 = Image.open("Images/home.jpg")
         img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
         self.photoimg4 = ImageTk.PhotoImage(img4)
+        self.root.iconbitmap('Images/icon.ico')
 
         bg_img = Label(self.root, image=self.photoimg4)
         bg_img.place(x=0, y=0, width=swidth, height=sheight)
@@ -54,7 +57,7 @@ class train:
         
         #button
         Butt = Button(self.root, text="Train Data", command=self.train_classifier, cursor="hand2", font=("times new roman",25, "bold"),bg="#063970", fg="white")
-        Butt.place(x=540, y=380, width=400, height=60)
+        Butt.place(x=540, y=300, width=400, height=60)
 
         #=================================training ==================
     def train_classifier(self):
@@ -79,11 +82,11 @@ class train:
             cv2.destroyAllWindows()
             messagebox.showinfo("Result","Training datasets Completed !")
         except Exception as es:
-                messagebox.showerror("Error", f"Due To:{str(es)}", parent=self.root)
+                messagebox.showerror("Error", f"errer in:{str(es)}", parent=self.root)
     #========= home======================
     def home(self):
              self.new_window = Toplevel(self.root)
-             self.app = mainn(self.new_window)
+             self.app =Admin_main(self.new_window)
 
     def exite(self):
              self.exit=messagebox.askyesno("FRSAS"," Are you sure exit this project ?",parent=self.root)

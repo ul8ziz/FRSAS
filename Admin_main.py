@@ -5,21 +5,23 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
-from student import *
-from train import train
-from dashboard import dashboard
-from face_recognition import face_recognition
-from attendance import attendance
+from about import *
 import os
+from student import *
+from train import *
+from dashboard import *
+from face_recognition import *
+from attendance import *
 
 class Admin_main:
     def __init__(self, root):
+        
         self.root = root
         swidth= root.winfo_screenwidth() 
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("Face Recognition Student Attendance System")
-        self.root.iconbitmap('Images/icon.png')
+        self.root.iconbitmap('Images/icon.ico')
         # self.root.iconbitmap('/path/to/ico/icon.ico')
         # background image
         img4 = Image.open("Images/home.jpg")
@@ -78,7 +80,7 @@ class Admin_main:
 
        
         # Tak Attendance  button
-        img6 = Image.open("Images/faceDetector.jpeg")
+        img6 = Image.open("Images/faceDetector.jpg")
         img6 = img6.resize((195, 195), Image.ANTIALIAS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 
@@ -98,7 +100,7 @@ class Admin_main:
 
 
         # Rabort button
-        img7 = Image.open("Images/face.jpg")
+        img7 = Image.open("Images/face.png")
         img7 = img7.resize((150, 150), Image.ANTIALIAS)
         self.photoimg7 = ImageTk.PhotoImage(img7)
 
@@ -159,10 +161,10 @@ class Admin_main:
         img11 = img11.resize((150, 150), Image.ANTIALIAS)
         self.photoimg11 = ImageTk.PhotoImage(img11)
 
-        btn7 = Button(Frame1, image=self.photoimg11, cursor="hand2")
+        btn7 = Button(Frame1, image=self.photoimg11,command=self.about, cursor="hand2")
         btn7.grid(row=0, column=7,padx=10)
 
-        btn7_7 = Button(Frame1, text="About Us", cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white",width="12")
+        btn7_7 = Button(Frame1, text="About Us",command=self.about, cursor="hand2", font=("times new roman", 15, "bold"), bg="darkblue", fg="white",width="12")
         btn7_7.grid(row=1, column=7)
         
         def on_leave(e):
@@ -195,25 +197,35 @@ class Admin_main:
     # =================================== Functions =========================================
 
     def student_details(self):
+        self.root.withdraw()
         self.new_window = Toplevel(self.root)
-        self.app = Student(self.new_window)
+        bb = Student(self.new_window)
 
     def dashboard(self):
+        self.root.withdraw()
         self.new_window = Toplevel(self.root)
-        self.app = dashboard(self.new_window)
+        bb = dashboard(self.new_window)
 
 
     def face_recognition(self):
+            self.root.withdraw()
             self.new_window = Toplevel(self.root)
-            self.app = face_recognition(self.new_window)
+            bb = face_recognition(self.new_window)
 
     def attendance(self):
+        self.root.withdraw()
         self.new_window = Toplevel(self.root)
-        self.app = attendance(self.new_window)   
+        bb = attendance(self.new_window)   
 
     def train(self):
+        self.root.withdraw()
         self.new_window = Toplevel(self.root)
-        self.app = train(self.new_window)   
+        bb = train(self.new_window)   
+    def about(self):
+        self.root.withdraw()
+        self.new_window = Toplevel(self.root)
+        bb = about(self.new_window)   
+
 
     def open_img(self):
         os.startfile("data_set")

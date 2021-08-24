@@ -6,14 +6,15 @@ from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
 import mysql.connector
-from main import mainn
-from Admin_main import Admin_main
+from main import *
+from Admin_main import *
 
 class login_window:
     def __init__(self, root):
         self.root = root
         self.root.title("Login")
         self.root.geometry("1550x800+0+0")
+        self.root.iconbitmap('Images/icon.ico')
 
         frame = Frame(self.root, bg="white")
         frame.place(x=610, y=170, width=340, height=450)
@@ -42,14 +43,14 @@ class login_window:
         self.txtpass.place(x=40, y=270, width=270)
 
         # icon.............
-        img2 = Image.open("images\\2.jpg")
-        img2 = img2.resize((20, 20), Image.ANTIALIAS)
+        img2 = Image.open("images\icon_user.png")
+        img2 = img2.resize((25, 25), Image.ANTIALIAS)
         self.photoimage2 = ImageTk.PhotoImage(img2)
         lblimg2 = Label(image=self.photoimage2, bg="white", borderwidth=0)
         lblimg2.place(x=650, y=343, width=25, height=25)
 
-        img3 = Image.open("images\\3.jpg")
-        img3 = img3.resize((20, 20), Image.ANTIALIAS)
+        img3 = Image.open("images\icon_pass.png")
+        img3 = img3.resize((25, 25), Image.ANTIALIAS)
         self.photoimage3 = ImageTk.PhotoImage(img3)
         lblimg3 = Label(image=self.photoimage3, bg="white", borderwidth=0,)
         lblimg3.place(x=650, y=415, width=25, height=25)
@@ -69,8 +70,6 @@ class login_window:
 
         loginbtn.bind("<Enter>", on_entera)
         loginbtn.bind("<Leave>", on_leavea)
-
-   
 
     def login(self):
         try:    
@@ -94,13 +93,23 @@ class login_window:
                      self.txtpass.get() ))
                 row=my_cursor.fetchone()
                 if "Admin" in row:
-                    messagebox.showinfo("Welcome","Hi "+str(a[1])+"You are admin")
+                    messagebox.showinfo("Welcome  ","Hi "+str(a[1])+"  You are admin")
+                    # self.root.destroy()
+                    # self.login_window.destroy()
+                    self.root.withdraw()
                     self.new_window = Toplevel(self.root)
-                    self.app = Admin_main(self.new_window) 
-                    #self.login_window.destroy()
+                    bb = Admin_main(self.new_window) 
+                    # self.login_window(self.new_window)
+
+                    # top_level = tk.Toplevel(self)
+                    # self.app = Admin_main(top_level, self)
+                    # self.app.pack()
+                    # self.app.wait_window()
+
                 else:
+                    self.root.withdraw()
                     self.new_window = Toplevel(self.root)
-                    self.app = mainn(self.new_window)
+                    p = mainn(self.new_window)
                 conn.commit()
                 conn.close()
         except Exception as es:
