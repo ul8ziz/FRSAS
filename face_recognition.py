@@ -21,7 +21,7 @@ class face_recognition:
         swidth= root.winfo_screenwidth() 
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
-        self.root.title("Face Recognition System")
+        self.root.title("Attendance System")
         self.root.iconbitmap("images/icon.ico")
         
        
@@ -64,7 +64,7 @@ class face_recognition:
         f.place(x=700, y=-5, width=120, height=120 )
 
         
-        img6 = Image.open("Images/homee.ico")
+        img6 = Image.open("Images/homee.png")
         img6 = img6.resize((130, 130), Image.ANTIALIAS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 

@@ -55,7 +55,7 @@ class Student:
         f.place(x=700, y=-5, width=120, height=120 )
 
         
-        img6 = Image.open("Images/homee.ico")
+        img6 = Image.open("Images/homee.png")
         img6 = img6.resize((130, 130), Image.ANTIALIAS)
         self.photoimg6 = ImageTk.PhotoImage(img6)
 
@@ -102,7 +102,7 @@ class Student:
         f_lbl.place(x=5, y=0, width=730, height=130)
 
         #Student's  Information
-        student_frame = LabelFrame(main_frame, bd=2, bg="white", relief=RIDGE, text="Student's  Information",font=("Calibri", 12, "bold"), fg="green")
+        student_frame = LabelFrame(main_frame, bd=2, bg="white", relief=RIDGE, text="Student's  Information",font=("Calibri", 12, "bold"), fg="#063970")
         student_frame.place(x=5, y=150, width=720, height=450)
 
         # studentID
@@ -197,14 +197,17 @@ class Student:
         btnFrame1 = Frame(student_frame, relief=RIDGE, bg="white")
         btnFrame1.place(x=5, y=340, width=710, height=35)
 
-        capture_photo_btn = Button(btnFrame1, text="Capture Photo Sample",command=self.generate_dataset, width=69, font=('arial', 13, 'bold'), bg="#063970", fg="white")
+        capture_photo_btn = Button(btnFrame1, text="Capture Photo Sample",command=self.generate_dataset, width=51, font=('arial', 13, 'bold'), bg="#063970", fg="white")
         capture_photo_btn.grid(row=0, column=0)
 
+        train_btn = Button(btnFrame1, text="Train sample",command=self.generate_dataset, width=17, font=('arial', 13, 'bold'), bg="#063970", fg="white")
+        train_btn.grid(row=0, column=2)
+
         # ==================================Search Systems========================================
-        search_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE, text="Search System",font=("Calibri", 12, "bold"), fg="green")
+        search_frame = LabelFrame(Right_frame, bd=2, bg="white", relief=RIDGE, text="Search System",font=("Calibri", 12, "bold"), fg="#063970")
         search_frame.place(x=5, y=60, width=730, height=60)
         
-        search_label = Label(search_frame, text=" Search By: ", font=("Calibri", 10, "bold"), bg="#063970",fg="white")
+        search_label = Label(search_frame, text=" Search By : ", font=("Calibri", 10, "bold"), bg="white",fg="#063970")
         search_label.grid(row=0, column=0, padx=20,pady=5, sticky=W)
 
         search_combo = ttk.Combobox(search_frame, font=("Calibri", 10, "bold"),textvariable=self.var_search_comboo, state="readonly", width=10)
