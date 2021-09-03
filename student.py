@@ -12,8 +12,6 @@ import cv2
 from Admin_main import *
 
 
-
-
 class Student:
     def __init__(self, root):
         self.root = root 
@@ -22,6 +20,8 @@ class Student:
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("STUDENT  INFORMATION  MANAGEMENT System")
         self.root.iconbitmap('Images/icon.ico')
+        root.state("zoomed")
+
 
         # ==================================variables ========================================
         self.var_dep = StringVar()
@@ -407,7 +407,7 @@ class Student:
             except Exception as es:
                 messagebox.showerror("Error",f"Due To :{str(es)}",parent=self.root)
                 
-    #==============delete data============================
+    #============== delete data============================
     def delete_data(self):
         if self.var_std_id.get() == "":
             messagebox.showerror("Error", "Student ID Most be Required", parent=self.root)
@@ -433,7 +433,7 @@ class Student:
             except Exception as es:
                messagebox.showerror("Error",f"here :{str(es)}",parent=self.root)
                 
-    #==============Reset ============================   
+    #============== Reset ============================   
     def reset_data(self):
          self.var_dep.set("Select Department")
          self.var_year.set("Select Year")

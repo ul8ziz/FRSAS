@@ -16,6 +16,8 @@ class about:
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.title("About the System")
         self.root.iconbitmap('Images/icon.ico')
+        root.state("zoomed")
+
 
         
 ##########logo

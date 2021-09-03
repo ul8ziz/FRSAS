@@ -15,7 +15,10 @@ class login_window:
         self.root.title("Login")
         self.root.geometry("1550x800+0+0")
         self.root.iconbitmap('Images/icon.ico')
+        root.state("zoomed")
 
+        
+        
         frame = Frame(self.root, bg="white")
         frame.place(x=610, y=170, width=340, height=450)
         

@@ -18,6 +18,8 @@ class Register:
         self.root.geometry("%dx%d" % (swidth, sheight))
         self.root.background="DodgerBlue4"
         self.root.iconbitmap('Images/icon.ico')
+        root.state("zoomed")
+
 
         # ***************variabletr
         self.var_id = StringVar()

@@ -13,7 +13,6 @@ from register import *
 from Admin_main import *
 
 
-
 class dashboard:
     def __init__(self, root):
         self.root = root
@@ -24,6 +23,8 @@ class dashboard:
         self.root.config(bg = '#154c79')
         self.root.iconbitmap('Images/icon.ico')
         #self.root.wm_attributes('-transparentcolor','#add123')
+        root.state("zoomed")
+
 
         img4 = Image.open("Images/home.jpg")
         img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)

@@ -11,9 +11,6 @@ import numpy as np
 import cv2
 
 
-
-
-
 class train:
     def __init__(self, root):
         self.root = root
@@ -25,6 +22,8 @@ class train:
         img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
         self.photoimg4 = ImageTk.PhotoImage(img4)
         self.root.iconbitmap('Images/icon.ico')
+        root.state("zoomed")
+
 
         bg_img = Label(self.root, image=self.photoimg4)
         bg_img.place(x=0, y=0, width=swidth, height=sheight)

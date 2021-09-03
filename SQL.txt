@@ -15,3 +15,7 @@ CREATE TABLE Students (
   `Teacher` VARCHAR(45) NULL,
   `PhotoSample` VARCHAR(45) NULL,
   PRIMARY KEY (`Student_id`))
+
+
+
+TRUNCATE TABLE tablename

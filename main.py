@@ -17,6 +17,8 @@ class mainn:
         self.root.title("Face Recognition Student Attendance System")
         self.root.iconbitmap('Images/icon.ico')
         # self.root.iconbitmap('/path/to/ico/icon.ico')
+        root.state("zoomed")
+
         # background image
         img4 = Image.open("Images/home.jpg")
         img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)

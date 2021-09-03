@@ -5,8 +5,11 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 from tkinter import messagebox
-from about import *
 import os
+import datetime
+import time
+
+from about import *
 from student import *
 from train import *
 from dashboard import *
@@ -17,19 +20,56 @@ class Admin_main:
     def __init__(self, root):
         
         self.root = root
+        
         swidth= root.winfo_screenwidth() 
         sheight= root.winfo_screenheight()
         self.root.geometry("%dx%d" % (swidth, sheight))
+        # self.root.bind('<Escape>',self.toggle_geom)
         self.root.title("Face Recognition Student Attendance System")
         self.root.iconbitmap('Images/icon.ico')
-        # self.root.iconbitmap('/path/to/ico/icon.ico')
+        root.state("zoomed")
+
+
+        def donothing():
+            filewin = Toplevel(self.root)
+            button = Button(filewin, text="Do nothing button")
+            button.pack()
+        menubar = Menu(self.root)
+        filemenu = Menu(menubar, tearoff=0)
+        filemenu.add_command(label="New", command=donothing)
+        filemenu.add_command(label="Open", command=donothing)
+        filemenu.add_command(label="Save", command=donothing)
+        filemenu.add_command(label="Save as...", command=donothing)
+        filemenu.add_command(label="Close", command=donothing)
+        filemenu.add_separator()
+        filemenu.add_command(label="Exit", command=self.root.quit)
+        menubar.add_cascade(label="File", menu=filemenu)
+        editmenu = Menu(menubar, tearoff=0)
+        editmenu.add_command(label="Undo", command=donothing)
+        editmenu.add_separator()
+        editmenu.add_command(label="Cut", command=donothing)
+        editmenu.add_command(label="Copy", command=donothing)
+        editmenu.add_command(label="Paste", command=donothing)
+        editmenu.add_command(label="Delete", command=donothing)
+        editmenu.add_command(label="Select All", command=donothing)
+        menubar.add_cascade(label="Edit", menu=editmenu)
+        helpmenu = Menu(menubar, tearoff=0)
+        helpmenu.add_command(label="Help Index", command=donothing)
+        helpmenu.add_command(label="About...", command=donothing)
+        menubar.add_cascade(label="Help", menu=helpmenu)
+        self.root.config(menu=menubar)
+        
+        statusbar = Label(root, text= "  UL8ZIZ  ", bd=1, relief=SUNKEN, anchor=W)
+        statusbar.pack(side=BOTTOM, fill=X ,)
+        # root.attributes('-fullscreen',True)
+        
         # background image
         img4 = Image.open("Images/home.jpg")
         img4 = img4.resize((swidth,sheight), Image.ANTIALIAS)
         self.photoimg4 = ImageTk.PhotoImage(img4)
 
         bg_img = Label(self.root, image=self.photoimg4)
-        bg_img.place(x=0, y=0, width=swidth, height=sheight)
+        bg_img.place(x=0, y=0, width=swidth, height=sheight-100)
 
         title_lbl = Label(bg_img, text="FACE RECOGNITION ATTENDANCE SYSTEM ",
                           font=("arial", 35, "bold"), bg="white", fg="black")
